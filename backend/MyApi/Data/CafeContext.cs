@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using MyCafeList.Models;
 public class CafeContext : DbContext
 {
   public DbSet<Cafe> Cafes { get; set; } = null!;
