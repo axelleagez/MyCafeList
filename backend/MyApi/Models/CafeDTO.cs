@@ -9,6 +9,7 @@ public class CafeDTO
     public string Ville { get; set; } = null!;
     public string Pays { get; set; } = null!;
     public string? Description { get; set; }
+
     //public string? ImageUrl { get; set; }
     public int? Note { get; set; }
     public string? Commentaire { get; set; }
