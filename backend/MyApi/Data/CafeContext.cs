@@ -9,6 +9,7 @@ public class CafeContext : DbContext
 
 
 
+
   public CafeContext()
   {
     // Path to SQLite database file
