@@ -4,8 +4,7 @@ public class CafeList
 {
     public int Id { get; set; }
     public int IdUser { get; set; } // clé étrangère
-    public int IdCafe { get; set; } // clé étrangère
-    public DateTime DateAjout { get; set; } = DateTime.Now;
+    public List<Cafe> ListCafe { get; set; } = new();
 
     public User User { get; set; } = null!;
     public Cafe Cafe { get; set; } = null!;
@@ -16,7 +15,6 @@ public class CafeList
     {
         Id = GestionCafeListDTO.Id;
         IdUser = GestionCafeListDTO.IdUser;
-        IdCafe = GestionCafeListDTO.IdCafe;
-        DateAjout = GestionCafeListDTO.DateAjout;
+        ListCafe = GestionCafeListDTO.ListCafe.Select(c => new Cafe(c)).ToList();
     }
 }

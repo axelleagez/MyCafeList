@@ -16,7 +16,6 @@ public class Cafe
     public DateTime DateCreation { get; set; } = DateTime.Now;
 
     public User User { get; set; } = null!;
-    public List<Cafe> CafesAjoutes { get; set; } = new();
     public List<Favorites> Favorites { get; set; } = new();
 
     public Cafe() { }
