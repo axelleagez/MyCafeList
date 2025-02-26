@@ -14,9 +14,9 @@ public class Cafe
     public int? Note { get; set; }
     public string? Commentaire { get; set; }
     public DateTime DateCreation { get; set; } = DateTime.Now;
+    public bool StatutFav { get; set; }
 
     public User User { get; set; } = null!;
-    public List<Favorites> Favorites { get; set; } = new();
 
     public Cafe() { }
 
@@ -33,5 +33,6 @@ public class Cafe
         Note = cafeDTO.Note;
         Commentaire = cafeDTO.Commentaire;
         DateCreation = cafeDTO.DateCreation;
+        StatutFav = cafeDTO.StatutFav;
     }
 }

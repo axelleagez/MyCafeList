@@ -14,6 +14,7 @@ public class CafeDTO
     public int? Note { get; set; }
     public string? Commentaire { get; set; }
     public DateTime DateCreation { get; set; }
+    public bool StatutFav { get; set; }
 
     public CafeDTO() { }
 
@@ -30,5 +31,6 @@ public class CafeDTO
         Note = cafe.Note;
         Commentaire = cafe.Commentaire;
         DateCreation = cafe.DateCreation;
+        StatutFav = cafe.StatutFav;
     }
 }
