@@ -19,4 +19,14 @@ public class DataContext : DbContext
     {
         options.UseSqlite($"Data Source={DbPath}");
     }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder
+            .Entity<Cafe>()
+            .HasOne(c => c.User)
+            .WithMany(u => u.Cafes)
+            .HasForeignKey(c => c.IdUser)
+            .OnDelete(DeleteBehavior.Cascade); // Optionnel : supprime les cafés si l'utilisateur est supprimé
+    }
 }

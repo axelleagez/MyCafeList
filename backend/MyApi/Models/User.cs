@@ -7,6 +7,7 @@ public class User
     public string Email { get; set; } = null!;
     public string MotDePasse { get; set; } = null!;
     public bool ModePrive { get; set; } = false;
+    public ICollection<Cafe> Cafes { get; set; } = new List<Cafe>();
 
     public User() { }
 

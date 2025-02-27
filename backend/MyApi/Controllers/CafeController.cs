@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MyCafeList.Models;
 
+//controller pour les cafés : post, get avec id, put avec id et delete avec id
 namespace MyCafeList.Controllers
 {
     [ApiController]
@@ -13,6 +14,15 @@ namespace MyCafeList.Controllers
         public CafeController(DataContext context)
         {
             _context = context;
+        }
+
+        // GET: api/cafes
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<CafeDTO>>> GetCafes()
+        {
+            var cafes = await _context.Cafes.Select(c => new CafeDTO(c)).ToListAsync();
+
+            return Ok(cafes);
         }
 
         // POST: api/cafes

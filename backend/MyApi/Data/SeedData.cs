@@ -7,7 +7,7 @@ public class SeedData
     {
         using var context = new DataContext();
 
-        if (context.Cafes.Any())
+        if (context.Cafes.Any() || context.Users.Any())
         {
             return;
         }
@@ -15,20 +15,25 @@ public class SeedData
         // Création de l'utilisateur fictif
         User user1 = new User
         {
-            Id = 1,
             Nom = "UtilisateurTest",
             Email = "test@example.com",
             MotDePasse = "password123",
             ModePrive = false,
         };
+        User user2 = new User
+        {
+            Nom = "UtilisateurTest2",
+            Email = "test2@example.com",
+            MotDePasse = "password123",
+            ModePrive = false,
+        };
 
-        context.Users.Add(user1);
+        context.Users.AddRange(user1, user2);
         context.SaveChanges();
 
         // Add café1
         Cafe cafe1 = new Cafe
         {
-            Id = 1,
             IdUser = user1.Id, // ID utilisateur fictif
             Nom = "CaféTest1",
             Adresse = "Adresse Test 1",
@@ -43,7 +48,6 @@ public class SeedData
         // Add café2
         Cafe cafe2 = new Cafe
         {
-            Id = 2,
             IdUser = user1.Id, // ID utilisateur fictif
             Nom = "CaféTest2",
             Adresse = "Adresse Test 2",
