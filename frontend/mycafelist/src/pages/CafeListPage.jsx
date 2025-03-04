@@ -28,11 +28,11 @@ const CafeListPage = () => {
         Ma Liste de Cafés 
       </Typography>
 
-      {/* Gestion du chargement et des erreurs */}
+      {/* gestion du chargement et des erreurs */}
       {loading && <CircularProgress />}
       {error && <Typography color="error">{error}</Typography>}
 
-      {/* Affichage des cafés */}
+      {/* affichage cafés */}
       {!loading && cafes.length > 0 ? (
         <List>
           {cafes.map((cafe) => (
