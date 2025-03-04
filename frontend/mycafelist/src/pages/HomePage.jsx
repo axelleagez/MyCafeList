@@ -10,7 +10,7 @@ const HomePage = () => {
 
   // Récupération des cafés depuis l'API
   useEffect(() => {
-    axios.get("http://localhost:5000/api/cafes") // 🔥 Mets l'URL de ton API
+    axios.get("http://localhost:5091/api/cafes") // URL API
       .then(response => {
         setCafes(response.data);
         setLoading(false);

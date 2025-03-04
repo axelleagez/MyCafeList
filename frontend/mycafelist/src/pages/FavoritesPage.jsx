@@ -8,7 +8,7 @@ const FavoritesPage = () => {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/cafes") // URL API
+    axios.get("http://localhost:5091/api/cafes") // URL API
       .then(response => {
         // filtrage des cafés favoris
         const favCafes = response.data.filter(cafe => cafe.StatutFav === true);

@@ -38,7 +38,7 @@ const AddPage = () => {
 
     try {
       // envoi des données à l'API
-      await axios.post("http://localhost:5000/api/cafes", formData);
+      await axios.post("http://localhost:5091/api/cafes", formData);
       setLoading(false);
       navigate("/list"); // redirection vers la liste après l'ajout
     } catch (err) {

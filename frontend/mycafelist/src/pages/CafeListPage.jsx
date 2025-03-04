@@ -8,7 +8,7 @@ const CafeListPage = () => {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/cafes") // URL API
+    axios.get("http://localhost:5091/api/cafes") // URL API
       .then(response => {
         // mettre que les cafés de l'utilisateur 1 pour faire un test
         const userCafes = response.data.filter(cafe => cafe.IdUser === 1);
