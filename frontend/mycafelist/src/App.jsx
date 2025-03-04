@@ -10,9 +10,8 @@ import ProfilPage from "./pages/ProfilPage";
 
 function App() {
   return (
-    <div>
-    <h1>Hello World</h1>
-      {/*<Navbar />
+    <>
+    <Navbar />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/add" element={<AddPage />} />
@@ -20,8 +19,8 @@ function App() {
         <Route path="/details/:id" element={<CafeDetailsPage />} />
         <Route path="/favorites" element={<FavoritesPage />} />
         <Route path="/profile" element={<ProfilPage />} />
-      </Routes>*/}
-    </div>
+      </Routes>
+    </>
   );
 }
 
