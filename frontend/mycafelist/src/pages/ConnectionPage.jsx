@@ -43,6 +43,7 @@ const ConnectionPage = () => {
 
       setLoading(false);
       navigate("/"); // redirection vers page d'accueil
+      
     } catch (err) {
       console.error("Erreur d'authentification :", err);
       setError("Échec de l'authentification. Vérifiez vos informations.");
