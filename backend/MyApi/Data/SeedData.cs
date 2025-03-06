@@ -16,15 +16,15 @@ public class SeedData
         User user1 = new User
         {
             Nom = "UtilisateurTest",
-            Email = "test@example.com",
-            MotDePasse = "password123",
+            Email = "aagez@ensc.fr",
+            MotDePasse = "mdp",
             ModePrive = false,
         };
         User user2 = new User
         {
             Nom = "UtilisateurTest2",
-            Email = "test2@example.com",
-            MotDePasse = "password123",
+            Email = "fpicavet@ensc.fr",
+            MotDePasse = "mdp",
             ModePrive = false,
         };
 
