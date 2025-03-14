@@ -1,31 +1,54 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:5091/api/users";
+const API_URL = "http://localhost:5091/api";
 
 const api = {
-  /**
-   * Inscription d'un utilisateur
-   * @param {Object} userData - Données de l'utilisateur (Nom, Email, MotDePasse)
-   */
-  register: async (userData) => {
-    try {
-      const response = await axios.post(`${API_URL}/register`, userData);
-      localStorage.setItem("userId", response.data.Id);
-      localStorage.setItem("userEmail", response.data.Email);
+  // /**
+  //  * inscription d'un utilisateur
+  //  * @param {Object} userData - données de mon user (Nom, Email, MotDePasse)
+  //  */
+  // register: async (userData) => {
+  //   try {
+  //     const response = await axios.post(`${API_URL}/register`, userData);
+  //     localStorage.setItem("userId", response.data.Id);
+  //     localStorage.setItem("userEmail", response.data.Email);
+  //     return response.data;
+  //   } catch (error) {
+  //     console.error("Erreur lors de l'inscription :", error);
+  //     throw error;
+  //   }
+  // },
+
+
+/**
+ * Inscription d'un nouvel utilisateur
+ * @param {Object} credentials - Contient les informations d'inscription (Nom, Email, MotDePasse)
+ */
+register: async (credentials) => {
+  try {
+    const response = await axios.post(`${API_URL}/users/register`, credentials);
+
+    if (response.data && response.data.id && !isNaN(parseInt(response.data.id))) {
+      localStorage.setItem("userId", response.data.id);
+      localStorage.setItem("userEmail", response.data.email);
       return response.data;
-    } catch (error) {
-      console.error("Erreur lors de l'inscription :", error);
-      throw error;
+    } else {
+      throw new Error("Identifiant utilisateur manquant dans la réponse de l'API");
     }
-  },
+  } catch (error) {
+    console.error("Erreur lors de l'inscription :", error);
+    throw error;
+  }
+},
+
 
   /**
-   * Connexion d'un utilisateur
-   * @param {Object} credentials - Identifiants (Email, MotDePasse)
+   * connexion d'un utilisateur
+   * @param {Object} credentials - ses identifiants (Email, MotDePasse)
    */
   login: async (credentials) => {
     try {
-      const response = await axios.post(`${API_URL}/login`, credentials);
+      const response = await axios.post(`${API_URL}/users/login`, credentials);
 
       if (response.data && response.data.id && !isNaN(parseInt(response.data.id))) {
         localStorage.setItem("userId", response.data.id);
@@ -44,7 +67,7 @@ const api = {
   },
 
   /**
-   * Déconnexion de l'utilisateur
+   * déconnexion de l'utilisateur
    */
   logout: () => {
     localStorage.clear(); //je vide le localstorage entièrement
@@ -114,7 +137,7 @@ getUserProfile: async () => {
         }
 
         const response = await axios.get(`${API_URL}/${userId}`);
-        return response.data; // Retourne les infos utilisateur
+        return response.data; // pour retourner les infos utilisateur
     } catch (error) {
         console.error("Erreur lors de la récupération du profil :", error);
         throw error;

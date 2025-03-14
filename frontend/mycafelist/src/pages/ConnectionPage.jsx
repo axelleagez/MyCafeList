@@ -18,12 +18,20 @@ const ConnectionPage = () => {
   const [tab, setTab] = useState(0); // 0 = Connexion, 1 = Inscription
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({ Email: "", MotDePasse: "" });
+  const [formData, setFormData] = useState({
+    Nom: "",
+    Email: "",
+    MotDePasse: "",
+  });
   const [isLoginMode, setIsLoginMode] = useState(true);
   const [error, setError] = useState("");
-
+  console.log(isLoginMode);
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+  const handleTab = (value) => {
+    setTab(value);
+    setIsLoginMode(!isLoginMode);
   };
 
   const handleSubmit = async (event) => {
@@ -60,7 +68,7 @@ const ConnectionPage = () => {
       {/* onglets pour basculer entre Connexion et Inscription */}
       <Tabs
         value={tab}
-        onChange={(event, newValue) => setTab(newValue)}
+        onChange={(event, newValue) => handleTab(newValue)}
         centered
       >
         <Tab label="Se Connecter" />
