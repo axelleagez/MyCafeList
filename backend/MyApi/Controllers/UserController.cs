@@ -45,6 +45,10 @@ namespace MyCafeList.Controllers
         [HttpPost("login")]
         public async Task<ActionResult<UserDTO>> Login([FromBody] UserDTO loginDTO)
         {
+            if (string.IsNullOrEmpty(loginDTO.Email) || string.IsNullOrEmpty(loginDTO.MotDePasse))
+            {
+                return BadRequest("L'email et le mot de passe sont requis.");
+            }
             var user = await _context.Users.SingleOrDefaultAsync(u =>
                 u.Email == loginDTO.Email && u.MotDePasse == loginDTO.MotDePasse
             );
@@ -54,7 +58,14 @@ namespace MyCafeList.Controllers
                 return Unauthorized("Email ou mot de passe incorrect.");
             }
 
-            return new UserDTO(user);
+            return new UserDTO
+            {
+                Id = user.Id,
+                Nom = user.Nom, // Le nom de l'utilisateur est récupéré depuis la base
+                Email = user.Email,
+                MotDePasse = user.MotDePasse,
+                ModePrive = user.ModePrive, // Mode privé récupéré également
+            };
         }
 
         // GET: api/users/{id}

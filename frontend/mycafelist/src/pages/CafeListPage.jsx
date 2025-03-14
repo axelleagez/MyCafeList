@@ -1,25 +1,26 @@
 import React, { useState, useEffect } from "react";
 import { Container, Typography, CircularProgress, List, ListItem, ListItemText, Paper, Divider } from "@mui/material";
-import axios from "axios";
+import api from "../services/api";
+import { useNavigate } from "react-router-dom";
 
 const CafeListPage = () => {
   const [cafes, setCafes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get("http://localhost:5091/api/cafes") // URL API
-      .then(response => {
-        // mettre que les cafés de l'utilisateur 1 pour faire un test
-        const userCafes = response.data.filter(cafe => cafe.IdUser === 1);
-        setCafes(userCafes);
-        setLoading(false);
-      })
-      .catch(error => {
-        console.error("Erreur lors de la récupération des cafés :", error);
-        setError("Impossible de récupérer la liste des cafés.");
-        setLoading(false);
-      });
+    const fetchUserCafes = async () => {
+        try {
+            const userCafes = await api.getUserCafes();
+            setCafes(userCafes);
+        } catch (error) {
+            setError("Impossible de récupérer la liste des cafés.");
+        } finally {
+            setLoading(false);
+        }
+    };
+    fetchUserCafes();
   }, []);
 
   return (
@@ -37,7 +38,7 @@ const CafeListPage = () => {
         <List>
           {cafes.map((cafe) => (
             <Paper key={cafe.Id} sx={{ mb: 2, p: 2, boxShadow: 3 }}>
-              <ListItem>
+              <ListItem button onClick={() => navigate(`/details/${cafe.Id}`)}>
                 <ListItemText
                   primary={cafe.Nom}
                   secondary={`${cafe.Adresse}, ${cafe.Ville}, ${cafe.Pays}`}

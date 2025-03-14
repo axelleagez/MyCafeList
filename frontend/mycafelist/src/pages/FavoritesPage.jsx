@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Container, Typography, CircularProgress, List, ListItem, ListItemText, Paper, Divider } from "@mui/material";
-import axios from "axios";
+import api from "../services/api";
 
 const FavoritesPage = () => {
   const [favorites, setFavorites] = useState([]);
@@ -8,18 +8,17 @@ const FavoritesPage = () => {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    axios.get("http://localhost:5091/api/cafes") // URL API
-      .then(response => {
-        // filtrage des cafés favoris
-        const favCafes = response.data.filter(cafe => cafe.StatutFav === true);
-        setFavorites(favCafes);
-        setLoading(false);
-      })
-      .catch(error => {
-        console.error("Erreur lors de la récupération des cafés favoris :", error);
-        setError("Impossible de récupérer la liste des favoris.");
-        setLoading(false);
-      });
+    const fetchUserFavorites = async () => {
+        try {
+            const favCafes = await api.getUserFavorites();
+            setFavorites(favCafes);
+        } catch (error) {
+            setError("Impossible de récupérer la liste des favoris.");
+        } finally {
+            setLoading(false);
+        }
+    };
+    fetchUserFavorites();
   }, []);
 
   return (

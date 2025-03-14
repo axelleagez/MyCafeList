@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Container, TextField, Button, Box, Typography, FormControlLabel, Checkbox, MenuItem } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "../services/api";
 
 const AddPage = () => {
   const navigate = useNavigate();
@@ -37,14 +37,11 @@ const AddPage = () => {
     setError("");
 
     try {
-      // envoi des données à l'API
-      await axios.post("http://localhost:5091/api/cafes", formData);
-      setLoading(false);
-      navigate("/list"); // redirection vers la liste après l'ajout
+        await api.addCafe(formData);
+        navigate("/list"); // Redirection vers la liste des cafés
     } catch (err) {
-      console.error("Erreur lors de l'ajout du café :", err);
-      setError("Une erreur s'est produite. Veuillez réessayer.");
-      setLoading(false);
+        setError("Une erreur s'est produite. Veuillez réessayer.");
+        setLoading(false);
     }
   };
 

@@ -10,8 +10,8 @@ export default function Navbar() {
   // pour avoir l'url de la page sur laquelle on est
   const getActiveTab = () => { 
     switch (location.pathname) {
-      case "/":
-        return "/";
+      case "/home":
+        return "/home";
       case "/add":
         return "/add";
       case "/list":
@@ -21,7 +21,7 @@ export default function Navbar() {
       case "/profile":
         return "/profile";
       default:
-        return "/";
+        return "/home";
     }
   };
 
@@ -45,7 +45,7 @@ export default function Navbar() {
           height: "60px", // ajustement de la hauteur
         }}
       >
-        <BottomNavigationAction icon={<Home fontSize="large" />} value="/" />
+        <BottomNavigationAction icon={<Home fontSize="large" />} value="/home" />
         <BottomNavigationAction icon={<AddCircle fontSize="large" />} value="/add" />
         <BottomNavigationAction icon={<List fontSize="large" />} value="/list" />
         <BottomNavigationAction icon={<Favorite fontSize="large" />} value="/favorites" />
