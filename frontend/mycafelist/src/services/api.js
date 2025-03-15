@@ -130,20 +130,16 @@ getUserFavorites: async () => {
 
 
 getUserProfile: async () => {
-    // try {
-    //     const userId = localStorage.getItem("userId");
+  try {
+    const userId = localStorage.getItem("userId");
+    if (!userId) throw new Error("Utilisateur non connecté");
 
-    //     if (!userId || userId === "undefined" || userId === "null") {
-    //         console.error("Erreur : userId invalide ou utilisateur non connecté.");
-    //         return null; // stop la requête si id invalide
-    //     }
-
-    //     const response = await axios.get(`${API_URL}/${userId}`);
-    //     return response.data; // pour retourner les infos utilisateur
-    // } catch (error) {
-    //     console.error("Erreur lors de la récupération du profil :", error);
-    //     throw error;
-    // }
+    const response = await axios.get(`${API_URL}/users/${userId}`);
+    return response.data;
+  } catch (error) {
+    console.error("Erreur lors de la récupération du profil :", error);
+    throw error;
+  }
 },
 }
 
