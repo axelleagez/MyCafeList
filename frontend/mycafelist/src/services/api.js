@@ -3,21 +3,7 @@ import axios from "axios";
 const API_URL = "http://localhost:5091/api";
 
 const api = {
-  // /**
-  //  * inscription d'un utilisateur
-  //  * @param {Object} userData - données de mon user (Nom, Email, MotDePasse)
-  //  */
-  // register: async (userData) => {
-  //   try {
-  //     const response = await axios.post(`${API_URL}/register`, userData);
-  //     localStorage.setItem("userId", response.data.Id);
-  //     localStorage.setItem("userEmail", response.data.Email);
-  //     return response.data;
-  //   } catch (error) {
-  //     console.error("Erreur lors de l'inscription :", error);
-  //     throw error;
-  //   }
-  // },
+
 
 
 /**
@@ -89,6 +75,21 @@ register: async (credentials) => {
         console.error("Erreur lors de l'ajout d'un café :", error);
         throw error;
     }
+},
+
+deleteAccount: async () => {
+  try {
+    const userId = localStorage.getItem("userId");
+    if (!userId) throw new Error("Utilisateur non connecté");
+
+    await axios.delete(`${API_URL}/users/${userId}`);
+
+    localStorage.clear();
+    window.location.href = "/";
+  } catch (error) {
+    console.error("Erreur lors de la suppression du compte :", error);
+    throw error;
+  }
 },
 
   getUserCafes: async () => {
