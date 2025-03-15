@@ -92,57 +92,58 @@ deleteAccount: async () => {
   }
 },
 
-  getUserCafes: async () => {
-    try {
-        const userId = localStorage.getItem("userId");
-        if (!userId) throw new Error("Utilisateur non connecté");
+getUserCafes: async () => {
+  try {
+      const userId = localStorage.getItem("userId");
+      if (!userId) throw new Error("Utilisateur non connecté");
 
-        const response = await axios.get(`${API_URL}/cafes`);
-        return response.data.filter(cafe => cafe.IdUser === parseInt(userId));
-    } catch (error) {
-        console.error("Erreur lors de la récupération des cafés de l'utilisateur :", error);
-        throw error;
-    }
+      const response = await axios.get(`${API_URL}/cafes/user/${userId}`);
+      return response.data;
+  } catch (error) {
+      console.error("Erreur lors de la récupération des cafés de l'utilisateur :", error);
+      throw error;
+  }
+},
+
+getCafeById: async (id) => {
+  try {
+    const response = await axios.get(`${API_URL}/cafes/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error("Erreur lors de la récupération des détails du café :", error);
+    throw error;
+  }
 },
 
 getUserFavorites: async () => {
-    try {
-        const userId = localStorage.getItem("userId");
-        if (!userId) throw new Error("Utilisateur non connecté");
+    // try {
+    //     const userId = localStorage.getItem("userId");
+    //     if (!userId) throw new Error("Utilisateur non connecté");
 
-        const response = await axios.get(`${API_URL}/cafes`);
-        return response.data.filter(cafe => cafe.IdUser === parseInt(userId) && cafe.StatutFav === true);
-    } catch (error) {
-        console.error("Erreur lors de la récupération des favoris de l'utilisateur :", error);
-        throw error;
-    }
+    //     const response = await axios.get(`${API_URL}/cafes`);
+    //     return response.data.filter(cafe => cafe.IdUser === parseInt(userId) && cafe.StatutFav === true);
+    // } catch (error) {
+    //     console.error("Erreur lors de la récupération des favoris de l'utilisateur :", error);
+    //     throw error;
+    // }
 },
 
-getCafeById: async (cafeId) => {
-    try {
-        const response = await axios.get(`${API_URL}/cafes/${cafeId}`);
-        return response.data;
-    } catch (error) {
-        console.error("Erreur lors de la récupération du café :", error);
-        throw error;
-    }
-},
 
 getUserProfile: async () => {
-    try {
-        const userId = localStorage.getItem("userId");
+    // try {
+    //     const userId = localStorage.getItem("userId");
 
-        if (!userId || userId === "undefined" || userId === "null") {
-            console.error("Erreur : userId invalide ou utilisateur non connecté.");
-            return null; // stop la requête si id invalide
-        }
+    //     if (!userId || userId === "undefined" || userId === "null") {
+    //         console.error("Erreur : userId invalide ou utilisateur non connecté.");
+    //         return null; // stop la requête si id invalide
+    //     }
 
-        const response = await axios.get(`${API_URL}/${userId}`);
-        return response.data; // pour retourner les infos utilisateur
-    } catch (error) {
-        console.error("Erreur lors de la récupération du profil :", error);
-        throw error;
-    }
+    //     const response = await axios.get(`${API_URL}/${userId}`);
+    //     return response.data; // pour retourner les infos utilisateur
+    // } catch (error) {
+    //     console.error("Erreur lors de la récupération du profil :", error);
+    //     throw error;
+    // }
 },
 }
 

@@ -25,6 +25,37 @@ namespace MyCafeList.Controllers
             return Ok(cafes);
         }
 
+        // GET: api/cafes/{id}
+        [HttpGet("{id}")]
+        public async Task<ActionResult<CafeDTO>> GetCafe(int id)
+        {
+            var cafe = await _context.Cafes.FindAsync(id);
+
+            if (cafe == null)
+            {
+                return NotFound("Café non trouvé.");
+            }
+
+            return new CafeDTO(cafe);
+        }
+
+        // GET: api/cafes/user/{userId}
+        [HttpGet("user/{userId}")]
+        public async Task<ActionResult<IEnumerable<CafeDTO>>> GetUserCafes(int userId)
+        {
+            var cafes = await _context
+                .Cafes.Where(c => c.IdUser == userId)
+                .Select(c => new CafeDTO(c))
+                .ToListAsync();
+
+            if (!cafes.Any())
+            {
+                return NotFound("Aucun café enregistré pour cet utilisateur.");
+            }
+
+            return Ok(cafes);
+        }
+
         // POST: api/cafes
         [HttpPost]
         public async Task<ActionResult<Cafe>> AddCafe(CafeDTO cafeDTO)
@@ -34,20 +65,6 @@ namespace MyCafeList.Controllers
             await _context.SaveChangesAsync();
 
             return CreatedAtAction(nameof(GetCafe), new { id = cafe.Id }, new CafeDTO(cafe));
-        }
-
-        // GET: api/cafes/{id}
-        [HttpGet("{id}")]
-        public async Task<ActionResult<CafeDTO>> GetCafe(int id)
-        {
-            var cafe = await _context.Cafes.FindAsync(id);
-
-            if (cafe == null)
-            {
-                return NotFound();
-            }
-
-            return new CafeDTO(cafe);
         }
 
         // PUT: api/cafes/{id}
