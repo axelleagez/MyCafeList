@@ -37,6 +37,19 @@ const CafeDetailsPage = () => {
     fetchCafeDetails();
   }, [id]);
 
+  const handleDelete = async () => {
+    if (window.confirm("Voulez-vous vraiment supprimer ce café ?")) {
+      try {
+        await api.deleteCafe(id);
+        navigate("/list", { replace: true }); // redirection
+        window.location.reload(); // refresh
+      } catch (error) {
+        console.error("Erreur lors de la suppression :", error);
+      }
+    }
+  };
+  
+
   if (loading)
     return (
       <CircularProgress sx={{ display: "block", margin: "auto", mt: 5 }} />
@@ -77,6 +90,7 @@ const CafeDetailsPage = () => {
       <Box sx={{ mt: 4, display: "flex", justifyContent: "space-between" }}>
         <Button variant="outlined" onClick={() => navigate(-1)}>Retour</Button>
         <Button variant="contained" color="primary" onClick={() => navigate(`/edit/${cafe.Id}`)}>Modifier</Button>
+        <Button variant="contained" color="error" onClick={handleDelete}>Supprimer</Button>
       </Box>
     </Container>
   );

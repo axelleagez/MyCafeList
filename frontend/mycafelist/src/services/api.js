@@ -77,6 +77,17 @@ register: async (credentials) => {
     }
 },
 
+deleteCafe: async (id) => {
+  try {
+    await axios.delete(`${API_URL}/cafes/${id}`);
+    console.log(`Café ${id} supprimé avec succès.`);
+  } catch (error) {
+    console.error("Erreur lors de la suppression du café :", error);
+    throw error;
+  }
+},
+
+
 deleteAccount: async () => {
   try {
     const userId = localStorage.getItem("userId");
