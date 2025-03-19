@@ -54,10 +54,8 @@ namespace MyCafeList.Controllers
 
         // POST: api/cafes
         [HttpPost]
-        public async Task<ActionResult<Cafe>> AddCafe([FromBody] CafeDTO cafeDTO) //ajout du frombody pour qu'il comprenne que ça vient du corps de la requete
+        public async Task<ActionResult<Cafe>> AddCafe(CafeDTO cafeDTO) //ajout du frombody pour qu'il comprenne que ça vient du corps de la requete
         {
-             Console.WriteLine($"{cafeDTO}");
-
             var cafe = new Cafe(cafeDTO);
             _context.Cafes.Add(cafe);
             await _context.SaveChangesAsync();
