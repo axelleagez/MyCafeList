@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MyCafeList.Models;
@@ -48,22 +49,18 @@ namespace MyCafeList.Controllers
                 .Select(c => new CafeDTO(c))
                 .ToListAsync();
 
-            if (!cafes.Any())
-            {
-                return NotFound("Aucun café enregistré pour cet utilisateur.");
-            }
-
             return Ok(cafes);
         }
 
         // POST: api/cafes
         [HttpPost]
-        public async Task<ActionResult<Cafe>> AddCafe(CafeDTO cafeDTO)
+        public async Task<ActionResult<Cafe>> AddCafe([FromBody] CafeDTO cafeDTO) //ajout du frombody pour qu'il comprenne que ça vient du corps de la requete
         {
+             Console.WriteLine($"{cafeDTO}");
+
             var cafe = new Cafe(cafeDTO);
             _context.Cafes.Add(cafe);
             await _context.SaveChangesAsync();
-
             return CreatedAtAction(nameof(GetCafe), new { id = cafe.Id }, new CafeDTO(cafe));
         }
 

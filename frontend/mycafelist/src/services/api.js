@@ -69,8 +69,8 @@ register: async (credentials) => {
         if (!userId) throw new Error("Utilisateur non connecté");
 
         const cafeAvecUtilisateur = { ...cafeData, IdUser: parseInt(userId) };
-
-        await axios.post(`${API_URL}/cafes`, cafeAvecUtilisateur);
+        console.log("Données envoyées :", cafeData);
+        await axios.post(`${API_URL}/cafes`,cafeAvecUtilisateur);
     } catch (error) {
         console.error("Erreur lors de l'ajout d'un café :", error);
         throw error;

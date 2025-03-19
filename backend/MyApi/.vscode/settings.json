@@ -1,6 +1,0 @@
-{
-    "editor.defaultFormatter": "csharpier.csharpier-vscode",
-    "[csharp]": {
-        "editor.defaultFormatter": "csharpier.csharpier-vscode"
-    }
-}
