@@ -10,12 +10,16 @@ import {
   ListItem,
   ListItemText,
   Paper,
+  IconButton,
 } from "@mui/material";
-import api from "../services/api";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import axios from "../services/api";
+import { useFavorites } from "../contexts/FavoritesContext";
 
 const CafeDetailsPage = () => {
-  const { id } = useParams(); // recup id depuis url
+  const { id } = useParams();
   const navigate = useNavigate();
+  const { toggleFavorite, isFavorite } = useFavorites();
   const [cafe, setCafe] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -23,12 +27,10 @@ const CafeDetailsPage = () => {
   useEffect(() => {
     const fetchCafeDetails = async () => {
       try {
-        const cafeData = await api.getCafeById(id);
-        setCafe(cafeData);
+        const { data } = await axios.get(`/api/cafes/${id}`);
+        setCafe(data);
       } catch (error) {
-        setError(
-          error.response?.data || "Impossible de charger les détails du café."
-        );
+        setError("Impossible de charger les détails du café.");
       } finally {
         setLoading(false);
       }
@@ -37,61 +39,27 @@ const CafeDetailsPage = () => {
     fetchCafeDetails();
   }, [id]);
 
-  const handleDelete = async () => {
-    if (window.confirm("Voulez-vous vraiment supprimer ce café ?")) {
-      try {
-        await api.deleteCafe(id);
-        navigate("/list", { replace: true }); // redirection
-        window.location.reload(); // refresh
-      } catch (error) {
-        console.error("Erreur lors de la suppression :", error);
-      }
-    }
-  };
-  
-
-  if (loading)
-    return (
-      <CircularProgress sx={{ display: "block", margin: "auto", mt: 5 }} />
-    );
-  if (error)
-    return (
-      <Typography color="error" sx={{ textAlign: "center", mt: 5 }}>
-        {error}
-      </Typography>
-    );
-
-  if (!cafe) {
-    return (
-      <Typography color="error" sx={{ textAlign: "center", mt: 5 }}>
-        Café introuvable.
-      </Typography>
-    );
-  }
+  if (loading) return <CircularProgress sx={{ display: "block", margin: "auto", mt: 5 }} />;
+  if (error) return <Typography color="error" sx={{ textAlign: "center", mt: 5 }}>{error}</Typography>;
+  if (!cafe) return <Typography color="error" sx={{ textAlign: "center", mt: 5 }}>Café introuvable.</Typography>;
 
   return (
     <Container maxWidth="sm">
       <Paper elevation={3} sx={{ p: 3, mt: 4, borderRadius: 2 }}>
-        <Typography variant="h4" gutterBottom sx={{ textAlign: "center", fontWeight: "bold", mt:3 }}>
-          {cafe.nom}
-        </Typography>
+        <Box display="flex" justifyContent="space-between">
+          <Typography variant="h4" gutterBottom>{cafe.nom}</Typography>
+          <IconButton onClick={() => toggleFavorite(cafe.id)} color={isFavorite(cafe.id) ? "error" : "default"}>
+            <FavoriteIcon />
+          </IconButton>
+        </Box>
 
         <List>
-        <ListItem><ListItemText primary="Adresse" secondary={cafe.adresse} /></ListItem>
+          <ListItem><ListItemText primary="Adresse" secondary={cafe.adresse} /></ListItem>
           <ListItem><ListItemText primary="Ville" secondary={cafe.ville} /></ListItem>
           <ListItem><ListItemText primary="Pays" secondary={cafe.pays} /></ListItem>
           <ListItem><ListItemText primary="Description" secondary={cafe.description || "Aucune description disponible"} /></ListItem>
-          <ListItem><ListItemText primary="Note" secondary={cafe.note || "Non noté"} /></ListItem>
-          <ListItem><ListItemText primary="Commentaire" secondary={cafe.commentaire || "Aucun commentaire"} /></ListItem>
-          <ListItem><ListItemText primary="Statut Favori" secondary={cafe.statutFav ? "❤️ Oui" : "❌ Non"} /></ListItem>
         </List>
       </Paper>
-
-      <Box sx={{ mt: 4, display: "flex", justifyContent: "space-between" }}>
-        <Button variant="outlined" onClick={() => navigate(-1)}>Retour</Button>
-        <Button variant="contained" color="primary" onClick={() => navigate(`/edit/${cafe.Id}`)}>Modifier</Button>
-        <Button variant="contained" color="error" onClick={handleDelete}>Supprimer</Button>
-      </Box>
     </Container>
   );
 };

@@ -126,17 +126,14 @@ getCafeById: async (id) => {
   }
 },
 
-getUserFavorites: async () => {
-    // try {
-    //     const userId = localStorage.getItem("userId");
-    //     if (!userId) throw new Error("Utilisateur non connecté");
-
-    //     const response = await axios.get(`${API_URL}/cafes`);
-    //     return response.data.filter(cafe => cafe.IdUser === parseInt(userId) && cafe.StatutFav === true);
-    // } catch (error) {
-    //     console.error("Erreur lors de la récupération des favoris de l'utilisateur :", error);
-    //     throw error;
-    // }
+toggleFavorite: async (cafeId) => {
+  try {
+    const response = await axios.put(`${API_URL}/cafes/favorite/${cafeId}`);
+    return response.data;
+  } catch (error) {
+    console.error("Erreur lors du changement de statut favori :", error);
+    throw error;
+  }
 },
 
 

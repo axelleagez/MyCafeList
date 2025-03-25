@@ -106,5 +106,21 @@ namespace MyCafeList.Controllers
 
             return NoContent();
         }
+
+        // PUT: api/cafes/favorite/{id}
+        [HttpPut("favorite/{id}")]
+        public async Task<IActionResult> ToggleFavorite(int id)
+        {
+            var cafe = await _context.Cafes.FindAsync(id);
+            if (cafe == null)
+                return NotFound("Café non trouvé.");
+
+            cafe.StatutFav = !cafe.StatutFav;
+
+            _context.Entry(cafe).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+
+            return Ok(new CafeDTO(cafe));
+        }
     }
 }

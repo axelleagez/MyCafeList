@@ -1,57 +1,43 @@
-import React, { useState, useEffect } from "react";
-import { Container, Typography, CircularProgress, List, ListItem, ListItemText, Paper, Divider } from "@mui/material";
-import api from "../services/api";
+//import React, { useState, useEffect } from "react";
+import {
+  Container,
+  Typography,
+  CircularProgress,
+  List,
+  ListItem,
+  ListItemText,
+  Paper,
+  //Divider,
+  IconButton,
+} from "@mui/material";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import { useFavorites } from "../contexts/FavoritesContext";
+import { useNavigate } from "react-router-dom";
 
 const FavoritesPage = () => {
-  const [favorites, setFavorites] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  const { cafes, toggleFavorite, isLoading } = useFavorites();
+  const navigate = useNavigate();
+  const favorites = cafes.filter(c => c.statutFav);
 
-  useEffect(() => {
-    const fetchUserFavorites = async () => {
-        try {
-            const favCafes = await api.getUserFavorites();
-            setFavorites(favCafes);
-        } catch (error) {
-            setError("Impossible de récupérer la liste des favoris.");
-        } finally {
-            setLoading(false);
-        }
-    };
-    fetchUserFavorites();
-  }, []);
+  if (isLoading) return <CircularProgress />;
 
   return (
     <Container maxWidth="sm" sx={{ textAlign: "center", mt: 4 }}>
-      <Typography variant="h4" gutterBottom>
-        Mes Cafés Favoris ❤️
-      </Typography>
-
-      {/* gestion du chargement et des erreurs */}
-      {loading && <CircularProgress />}
-      {error && <Typography color="error">{error}</Typography>}
-
-      {/* affichage des cafés favoris */}
-      {!loading && favorites.length > 0 ? (
+      <Typography variant="h4">Mes Cafés Favoris</Typography>
+      {favorites.length ? (
         <List>
           {favorites.map((cafe) => (
-            <Paper key={cafe.Id} sx={{ mb: 2, p: 2, boxShadow: 3 }}>
-              <ListItem>
-                <ListItemText
-                  primary={cafe.Nom}
-                  secondary={`${cafe.Adresse}, ${cafe.Ville}, ${cafe.Pays}`}
-                />
+            <Paper key={cafe.id} sx={{ mb: 2, p: 2 }}>
+              <ListItem sx={{ display: "flex", justifyContent: "space-between" }}>
+                <ListItemText primary={cafe.nom} secondary={`${cafe.adresse}, ${cafe.ville}`} onClick={() => navigate(`/details/${cafe.id}`)} />
+                <IconButton onClick={() => toggleFavorite(cafe.id)} color="error">
+                  <FavoriteIcon />
+                </IconButton>
               </ListItem>
-              <Divider />
-              <Typography variant="body2" color="textSecondary">
-                {cafe.Description || "Aucune description disponible"}
-              </Typography>
             </Paper>
           ))}
         </List>
-      ) : (
-        !loading && <Typography>Aucun café favori enregistré pour le moment.</Typography>
-      )}
+      ) : <Typography>Aucun café en favori.</Typography>}
     </Container>
   );
 };
