@@ -136,6 +136,14 @@ toggleFavorite: async (cafeId) => {
   }
 },
 
+updateCafe: async (id, cafeData) => {
+  try {
+    await axios.put(`${API_URL}/cafes/${id}`, cafeData);
+  } catch (error) {
+    console.error("Erreur lors de la mise à jour du café :", error);
+    throw error;
+  }
+},
 
 getUserProfile: async () => {
   try {
