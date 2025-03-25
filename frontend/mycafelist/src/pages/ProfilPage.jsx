@@ -2,7 +2,7 @@ import { Container, Typography, Button, Box, Switch } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
-import api from "../services/api";
+import axios from "../services/api";
 
 const ProfilPage = () => {
   const { logout } = useContext(AuthContext);
@@ -12,7 +12,7 @@ const ProfilPage = () => {
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
-        const userData = await api.getUserProfile();
+        const userData = await axios.getUserProfile();
         setUser(userData);
       } catch (error) {
         console.error(
@@ -36,7 +36,7 @@ const ProfilPage = () => {
       )
     ) {
       try {
-        await api.deleteAccount();
+        await axios.deleteAccount();
       } catch (error) {
         console.error("Erreur lors de la suppression du compte :", error);
       }

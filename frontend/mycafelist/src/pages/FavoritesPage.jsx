@@ -1,4 +1,3 @@
-//import React, { useState, useEffect } from "react";
 import {
   Container,
   Typography,
@@ -7,7 +6,6 @@ import {
   ListItem,
   ListItemText,
   Paper,
-  //Divider,
   IconButton,
 } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";

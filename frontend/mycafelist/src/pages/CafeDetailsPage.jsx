@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import {
   Container,
   Typography,
-  Button,
   Box,
   CircularProgress,
   List,
@@ -18,7 +17,6 @@ import { useFavorites } from "../contexts/FavoritesContext";
 
 const CafeDetailsPage = () => {
   const { id } = useParams();
-  const navigate = useNavigate();
   const { toggleFavorite, isFavorite } = useFavorites();
   const [cafe, setCafe] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -27,7 +25,7 @@ const CafeDetailsPage = () => {
   useEffect(() => {
     const fetchCafeDetails = async () => {
       try {
-        const { data } = await axios.get(`/api/cafes/${id}`);
+        const data = await axios.getCafeById(id);
         setCafe(data);
       } catch (error) {
         setError("Impossible de charger les détails du café.");

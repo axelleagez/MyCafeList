@@ -10,7 +10,7 @@ import {
   MenuItem,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import api from "../services/api";
+import axios from "../services/api";
 
 const AddPage = () => {
   const navigate = useNavigate();
@@ -55,7 +55,7 @@ const AddPage = () => {
             idUser: parseInt(userId), 
             note: formData.note ? parseInt(formData.note) : null 
         };
-      await api.addCafe(cafeData);
+      await axios.addCafe(cafeData);
       setCafeAjoute(true); // message de confirmation
     } catch (err) {
       setError("Une erreur s'est produite. Veuillez réessayer.");
