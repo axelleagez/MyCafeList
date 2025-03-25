@@ -1,4 +1,11 @@
-import { Container, Typography, Button, Box, Switch } from "@mui/material";
+import {
+  Container,
+  Typography,
+  Button,
+  Box,
+  Switch,
+  Paper,
+} from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
@@ -44,45 +51,75 @@ const ProfilPage = () => {
   };
 
   return (
-    <Container maxWidth="sm" sx={{ textAlign: "center", mt: 4 }}>
-      <Typography variant="h4">Mon Profil</Typography>
+    <Container maxWidth="sm" sx={{ minHeight: "100vh", pt: 4, pb: 10 }}>
+      <Typography
+        variant="h4"
+        sx={{
+          fontFamily: "Modak, cursive",
+          color: "#095d40",
+          textAlign: "center",
+          mb: 3,
+        }}
+      >
+        Mon Profil
+      </Typography>
 
       {user ? (
-        <>
-          <Typography variant="body1">
+        <Paper
+          elevation={1}
+          sx={{
+            backgroundColor: "#f8f8ec",
+            border: "1px solid #d8dbae",
+            borderRadius: 4,
+            p: 4,
+            textAlign: "left",
+          }}
+        >
+          <Typography variant="body1" sx={{ mb: 1 }}>
             <strong>Nom :</strong> {user.nom}
           </Typography>
-          <Typography variant="body1">
+          <Typography variant="body1" sx={{ mb: 1 }}>
             <strong>Email :</strong> {user.email}
           </Typography>
-          <Typography variant="body1">
+          <Typography variant="body1" sx={{ mb: 3 }}>
             <strong>Mode privé :</strong>{" "}
             <Switch checked={user.modePrive} disabled />
           </Typography>
 
-          <Box sx={{ mt: 4 }}>
-            <Button
-              variant="contained"
-              color="secondary"
-              onClick={handleLogout}
-            >
+          <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+            <Button variant="contained" color="primary" onClick={handleLogout}>
               Se déconnecter
             </Button>
-          </Box>
-
-          <Box sx={{ mt: 2 }}>
             <Button
-              variant="contained"
+              variant="outlined"
               color="error"
               onClick={handleDeleteAccount}
             >
               Supprimer mon compte
             </Button>
           </Box>
-        </>
+        </Paper>
       ) : (
-        <Typography variant="body1">Chargement des informations...</Typography>
+        <Typography textAlign="center">
+          Chargement des informations...
+        </Typography>
       )}
+      <Box
+        sx={{
+          position: "fixed",
+          bottom: 150,
+          left: 0,
+          right: 0,
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        <img
+          src="logo.png"
+          alt="Logo bas de page"
+          style={{ maxWidth: "120px" }}
+        />
+      </Box>
     </Container>
   );
 };

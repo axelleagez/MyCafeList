@@ -36,7 +36,14 @@ const AddPage = () => {
     const { name, value, type, checked } = event.target;
     setFormData({
       ...formData,
-      [name]: type === "checkbox" ? checked : name === "note" ? (value ? parseInt(value) : null) : value,
+      [name]:
+        type === "checkbox"
+          ? checked
+          : name === "note"
+          ? value
+            ? parseInt(value)
+            : null
+          : value,
     });
   };
 
@@ -48,13 +55,13 @@ const AddPage = () => {
 
     try {
       const userId = localStorage.getItem("userId");
-        if (!userId) throw new Error("Utilisateur non connecté");
+      if (!userId) throw new Error("Utilisateur non connecté");
 
-        const cafeData = { 
-            ...formData, 
-            idUser: parseInt(userId), 
-            note: formData.note ? parseInt(formData.note) : null 
-        };
+      const cafeData = {
+        ...formData,
+        idUser: parseInt(userId),
+        note: formData.note ? parseInt(formData.note) : null,
+      };
       await axios.addCafe(cafeData);
       setCafeAjoute(true); // message de confirmation
     } catch (err) {
@@ -66,27 +73,58 @@ const AddPage = () => {
 
   return (
     <Container maxWidth="sm">
-      <Box sx={{ textAlign: "center", mt: 4 }}>
-        <Typography variant="h4" gutterBottom>
+      <Box sx={{ textAlign: "center", mt: 4, mb: 2 }}>
+        <Typography
+          variant="h4"
+          sx={{
+            fontFamily: "Modak, cursive",
+            color: "#095d40",
+            mb: 2,
+          }}
+        >
           Ajouter un Café
         </Typography>
       </Box>
 
       {/* café ajouté => afficher le message de confirmation */}
       {cafeAjoute ? (
-        <Box sx={{ textAlign: "center", mt: 3 }}>
-          <Typography variant="h6" color="success.main">
-            Le café a bien été enregistré !
+        <Box
+          sx={{
+            mt: 4,
+            textAlign: "center",
+            p: 4,
+            bgcolor: "#f8f8ec",
+            border: "1px solid #d8dbae",
+            borderRadius: 4,
+          }}
+        >
+          <Typography
+            variant="h5"
+            sx={{
+              fontFamily: "Modak, cursive",
+              color: "#55692d",
+              mb: 2,
+            }}
+          >
+            Café enregistré avec succès !
+          </Typography>
+          <Typography variant="body1" sx={{ mb: 3 }}>
+            Tu peux maintenant consulter ta liste ou ajouter un autre lieu.
           </Typography>
           <Box
-            sx={{ display: "flex", justifyContent: "center", gap: 2, mt: 3 }}
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              gap: 2,
+              flexWrap: "wrap",
+            }}
           >
             <Button
               variant="contained"
               color="primary"
               onClick={() => navigate("/list")}
             >
-              Aller voir ma liste
+              Voir ma liste
             </Button>
             <Button
               variant="outlined"
@@ -114,7 +152,16 @@ const AddPage = () => {
         <Box
           component="form"
           onSubmit={handleSubmit}
-          sx={{ display: "flex", flexDirection: "column", gap: 2 }}
+          sx={{
+            bgcolor: "#f8f8ec",
+            border: "1px solid #d8dbae",
+            borderRadius: 4,
+            p: 4,
+            boxShadow: 0,
+            display: "flex",
+            flexDirection: "column",
+            gap: 2,
+          }}
         >
           <TextField
             label="Nom du café"
@@ -189,12 +236,17 @@ const AddPage = () => {
                 checked={formData.statutFav}
                 onChange={handleChange}
                 name="statutFav"
+                color="primary"
               />
             }
             label="Ajouter aux favoris"
           />
 
-          {error && <Typography color="error">{error}</Typography>}
+          {error && (
+            <Typography color="error" textAlign="center">
+              {error}
+            </Typography>
+          )}
 
           <Button
             type="submit"

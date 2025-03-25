@@ -3,9 +3,9 @@ import {
   Typography,
   CircularProgress,
   List,
-  ListItem,
-  ListItemText,
   Paper,
+  ListItemButton,
+  ListItemText,
   IconButton,
 } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -15,27 +15,75 @@ import { useNavigate } from "react-router-dom";
 const FavoritesPage = () => {
   const { cafes, toggleFavorite, isLoading } = useFavorites();
   const navigate = useNavigate();
-  const favorites = cafes.filter(c => c.statutFav);
+  const favorites = cafes.filter((c) => c.statutFav);
 
   if (isLoading) return <CircularProgress />;
 
   return (
-    <Container maxWidth="sm" sx={{ textAlign: "center", mt: 4 }}>
-      <Typography variant="h4">Mes Cafés Favoris</Typography>
+    <Container maxWidth="sm" sx={{ minHeight: "100vh", pb: 10, pt: 4 }}>
+      <Typography
+        variant="h4"
+        sx={{
+          fontFamily: "Modak, cursive",
+          color: "#095d40",
+          textAlign: "center",
+          mb: 3,
+        }}
+      >
+        Mes Cafés Favoris
+      </Typography>
+
       {favorites.length ? (
-        <List>
+        <List sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
           {favorites.map((cafe) => (
-            <Paper key={cafe.id} sx={{ mb: 2, p: 2 }}>
-              <ListItem sx={{ display: "flex", justifyContent: "space-between" }}>
-                <ListItemText primary={cafe.nom} secondary={`${cafe.adresse}, ${cafe.ville}`} onClick={() => navigate(`/details/${cafe.id}`)} />
-                <IconButton onClick={() => toggleFavorite(cafe.id)} color="error">
+            <Paper
+              key={cafe.id}
+              elevation={1}
+              sx={{
+                p: 2,
+                borderRadius: 3,
+                backgroundColor: "#f8f8ec",
+              }}
+            >
+              <ListItemButton
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+                onClick={() => navigate(`/details/${cafe.id}`)}
+              >
+                <ListItemText
+                  primary={
+                    <Typography
+                      variant="h6"
+                      sx={{ fontWeight: 600, color: "#333" }}
+                    >
+                      {cafe.nom || "Nom inconnu"}
+                    </Typography>
+                  }
+                  secondary={`${cafe.adresse || "Adresse inconnue"}, ${
+                    cafe.ville || "Ville inconnue"
+                  }`}
+                />
+                <IconButton
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    toggleFavorite(cafe.id);
+                  }}
+                  color="error"
+                >
                   <FavoriteIcon />
                 </IconButton>
-              </ListItem>
+              </ListItemButton>
             </Paper>
           ))}
         </List>
-      ) : <Typography>Aucun café en favori.</Typography>}
+      ) : (
+        <Typography textAlign="center" sx={{ mt: 4 }}>
+          Aucun café en favori.
+        </Typography>
+      )}
     </Container>
   );
 };

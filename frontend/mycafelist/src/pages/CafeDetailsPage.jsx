@@ -54,35 +54,62 @@ const CafeDetailsPage = () => {
       await axios.updateCafe(cafe.id, cafe);
       setEditable(false);
     } catch (err) {
-      console.error(err);
       setError("Erreur lors de la mise à jour du café.");
     }
   };
 
-  if (loading)
-    return (
-      <CircularProgress sx={{ display: "block", margin: "auto", mt: 5 }} />
-    );
-  if (error)
+  const handleDelete = async () => {
+    if (window.confirm("Supprimer ce café ? Cette action est irréversible.")) {
+      try {
+        await axios.deleteCafe(cafe.id);
+        navigate("/list");
+      } catch (err) {
+        setError("Erreur lors de la suppression du café.");
+      }
+    }
+  };
+
+  if (loading) return <CircularProgress />;
+  if (error || !cafe)
     return (
       <Typography color="error" sx={{ textAlign: "center", mt: 5 }}>
-        {error}
-      </Typography>
-    );
-  if (!cafe)
-    return (
-      <Typography color="error" sx={{ textAlign: "center", mt: 5 }}>
-        Café introuvable.
+        {error || "Café introuvable."}
       </Typography>
     );
 
   return (
-    <Container maxWidth="sm">
-      <Button sx={{ mt: 2 }} onClick={() => navigate(-1)}>
+    <Container maxWidth="sm" sx={{ minHeight: "100vh", pb: 10 }}>
+      <Button
+        onClick={() => navigate(-1)}
+        sx={{
+          mb: 2,
+          color: "primary",
+          textTransform: "none",
+          fontWeight: 500,
+          alignSelf: "start",
+          "&:hover": {
+            textDecoration: "underline",
+            textDecorationColor: "#d8dbae", // vert clair
+          },
+        }}
+      >
         ← Retour
       </Button>
-      <Paper elevation={3} sx={{ p: 3, mt: 2, borderRadius: 2 }}>
-        <Box display="flex" justifyContent="space-between" alignItems="center">
+
+      <Paper
+        elevation={3}
+        sx={{
+          p: 4,
+          borderRadius: 4,
+          backgroundColor: "#f8f8ec",
+        }}
+      >
+        <Box
+          display="flex"
+          justifyContent="space-between"
+          alignItems="center"
+          mb={2}
+        >
           {editable ? (
             <TextField
               fullWidth
@@ -92,7 +119,12 @@ const CafeDetailsPage = () => {
               onChange={handleChange}
             />
           ) : (
-            <Typography variant="h4">{cafe.nom}</Typography>
+            <Typography
+              variant="h5"
+              sx={{ fontFamily: "Modak, cursive", color: "#095d40" }}
+            >
+              {cafe.nom}
+            </Typography>
           )}
           <IconButton
             onClick={() => toggleFavorite(cafe.id)}
@@ -131,25 +163,26 @@ const CafeDetailsPage = () => {
           ))}
         </List>
 
-        {editable ? (
-          <Button
-            variant="contained"
-            fullWidth
-            sx={{ mt: 2 }}
-            onClick={handleSave}
-          >
-            Enregistrer
-          </Button>
-        ) : (
-          <Button
-            variant="outlined"
-            fullWidth
-            sx={{ mt: 2 }}
-            onClick={handleEditToggle}
-          >
-            Modifier
-          </Button>
-        )}
+        <Box mt={3}>
+          {editable ? (
+            <Button variant="contained" fullWidth onClick={handleSave}>
+              Enregistrer
+            </Button>
+          ) : (
+            <Button variant="outlined" fullWidth onClick={handleEditToggle}>
+              Modifier
+            </Button>
+          )}
+        </Box>
+        <Button
+          variant="outlined"
+          color="error"
+          fullWidth
+          sx={{ mt: 2 }}
+          onClick={handleDelete}
+        >
+          Supprimer ce café
+        </Button>
       </Paper>
     </Container>
   );

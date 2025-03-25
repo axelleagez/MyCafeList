@@ -1,14 +1,29 @@
 import React from "react";
-import { BottomNavigation, BottomNavigationAction, Paper } from "@mui/material";
-import { Home, AddCircle, List, Favorite, AccountCircle } from "@mui/icons-material";
+import {
+  BottomNavigation,
+  BottomNavigationAction,
+  Paper,
+  Box,
+} from "@mui/material";
+import {
+  Home,
+  HomeOutlined,
+  AddCircle,
+  AddCircleOutline,
+  LocalCafe,
+  LocalCafeOutlined,
+  Favorite,
+  FavoriteBorder,
+  AccountCircle,
+  AccountCircleOutlined,
+} from "@mui/icons-material";
 import { useNavigate, useLocation } from "react-router-dom";
 
 export default function Navbar() {
   const navigate = useNavigate();
-  const location = useLocation(); 
+  const location = useLocation();
 
-  // pour avoir l'url de la page sur laquelle on est
-  const getActiveTab = () => { 
+  const currentTab = () => {
     switch (location.pathname) {
       case "/home":
         return "/home";
@@ -26,31 +41,94 @@ export default function Navbar() {
   };
 
   return (
-    <Paper
+    <Box
       sx={{
         position: "fixed",
-        bottom: 0,
+        bottom: 16,
         left: 0,
         right: 0,
+        display: "flex",
+        justifyContent: "center",
         zIndex: 1000,
-        width: "100%",
       }}
-      elevation={3}
     >
-      <BottomNavigation
-        value={getActiveTab()} // mise à jour selon la page actuelle
-        onChange={(event, newValue) => navigate(newValue)}
-        showLabels={false} // suppression des labels sous les icônes
+      <Paper
         sx={{
-          height: "60px", // ajustement de la hauteur
+          borderRadius: "50px",
+          px: 2,
+          width: "90%",
+          maxWidth: 500,
+          backgroundColor: "#2F5233",
         }}
       >
-        <BottomNavigationAction icon={<Home fontSize="large" />} value="/home" />
-        <BottomNavigationAction icon={<AddCircle fontSize="large" />} value="/add" />
-        <BottomNavigationAction icon={<List fontSize="large" />} value="/list" />
-        <BottomNavigationAction icon={<Favorite fontSize="large" />} value="/favorites" />
-        <BottomNavigationAction icon={<AccountCircle fontSize="large" />} value="/profile" />
-      </BottomNavigation>
-    </Paper>
+        <BottomNavigation
+          value={currentTab()}
+          onChange={(event, newValue) => navigate(newValue)}
+          showLabels={false}
+          sx={{
+            height: "60px",
+            backgroundColor: "transparent",
+            "& .MuiBottomNavigationAction-root": {
+              color: "#F4F1DE",
+              minWidth: "20%",
+            },
+            "& .Mui-selected": {
+              color: "#d8dbae",
+            },
+          }}
+        >
+          <BottomNavigationAction
+            icon={
+              currentTab() === "/home" ? (
+                <Home fontSize="large" sx={{ color: "#d8dbae" }} />
+              ) : (
+                <HomeOutlined fontSize="large" />
+              )
+            }
+            value="/home"
+          />
+          <BottomNavigationAction
+            icon={
+              currentTab() === "/add" ? (
+                <AddCircle fontSize="large" sx={{ color: "#d8dbae" }} />
+              ) : (
+                <AddCircleOutline fontSize="large" />
+              )
+            }
+            value="/add"
+          />
+          <BottomNavigationAction
+            icon={
+              currentTab() === "/list" ? (
+                <LocalCafe fontSize="large" sx={{ color: "#d8dbae" }} />
+              ) : (
+                <LocalCafeOutlined fontSize="large" />
+              )
+            }
+            value="/list"
+          />
+          <BottomNavigationAction
+            icon={
+              currentTab() === "/favorites" ? (
+                <Favorite fontSize="large" sx={{ color: "#d8dbae" }} />
+              ) : (
+                <FavoriteBorder fontSize="large" />
+              )
+            }
+            value="/favorites"
+          />
+          <BottomNavigationAction
+            icon={
+              currentTab() === "/profile" ? (
+                <AccountCircle fontSize="large" sx={{ color: "#d8dbae" }} />
+              ) : (
+                <AccountCircleOutlined fontSize="large" />
+              )
+            }
+            value="/profile"
+          />
+        </BottomNavigation>
+      </Paper>
+    </Box>
   );
 }

@@ -19,18 +19,37 @@ const CafeListPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetchCafes(); // Charge les cafés au montage
+    fetchCafes(); // chargement des cafés
   }, [fetchCafes]);
 
   if (isLoading) return <CircularProgress />;
 
   return (
-    <Container maxWidth="sm" sx={{ textAlign: "center", mt: 4 }}>
-      <Typography variant="h4">Ma Liste de Cafés</Typography>
+    <Container maxWidth="sm" sx={{ minHeight: "100vh", pb: 10, pt: 4 }}>
+      <Typography
+        variant="h4"
+        sx={{
+          fontFamily: "Modak, cursive",
+          color: "#095d40",
+          textAlign: "center",
+          mb: 3,
+        }}
+      >
+        Ma Liste de Cafés
+      </Typography>
+
       {cafes.length ? (
-        <List>
+        <List sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
           {cafes.map((cafe) => (
-            <Paper key={cafe.id} sx={{ mb: 2, p: 2 }}>
+            <Paper
+              key={cafe.id}
+              elevation={1}
+              sx={{
+                p: 2,
+                borderRadius: 3,
+                backgroundColor: "#f8f8ec",
+              }}
+            >
               <ListItemButton
                 sx={{
                   display: "flex",
@@ -40,7 +59,14 @@ const CafeListPage = () => {
                 onClick={() => navigate(`/details/${cafe.id}`)}
               >
                 <ListItemText
-                  primary={cafe.nom || "Nom inconnu"}
+                  primary={
+                    <Typography
+                      variant="h6"
+                      sx={{ fontWeight: 600, color: "#333" }}
+                    >
+                      {cafe.nom || "Nom inconnu"}
+                    </Typography>
+                  }
                   secondary={`${cafe.adresse || "Adresse inconnue"}, ${
                     cafe.ville || "Ville inconnue"
                   }, ${cafe.pays || "Pays inconnu"}`}
@@ -59,7 +85,9 @@ const CafeListPage = () => {
           ))}
         </List>
       ) : (
-        <Typography>Aucun café enregistré.</Typography>
+        <Typography textAlign="center" sx={{ mt: 4 }}>
+          Aucun café enregistré.
+        </Typography>
       )}
     </Container>
   );

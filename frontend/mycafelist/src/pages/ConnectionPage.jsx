@@ -12,6 +12,7 @@ import {
   Tab,
   Tabs,
   Alert,
+  Paper,
 } from "@mui/material";
 
 const ConnectionPage = () => {
@@ -25,10 +26,11 @@ const ConnectionPage = () => {
   });
   const [isLoginMode, setIsLoginMode] = useState(true);
   const [error, setError] = useState("");
-  console.log(isLoginMode);
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+
   const handleTab = (value) => {
     setTab(value);
     setIsLoginMode(!isLoginMode);
@@ -42,10 +44,8 @@ const ConnectionPage = () => {
       const response = isLoginMode
         ? await api.login(formData)
         : await api.register(formData);
-      console.log(response);
       if (response.id) {
         login(response.id);
-        console.log(response);
         navigate("/home");
       } else {
         setError("Échec de l'authentification.");
@@ -58,68 +58,104 @@ const ConnectionPage = () => {
   };
 
   return (
-    <Container maxWidth="sm">
-      <Box sx={{ textAlign: "center", mt: 4 }}>
-        <Typography variant="h4" gutterBottom>
-          {tab === 0 ? "Connexion" : "Inscription"}
-        </Typography>
+    <Container maxWidth="sm" sx={{ minHeight: "100vh", pt: 4, pb: 10 }}>
+      <Box sx={{ display: "flex", justifyContent: "center", mt: 2, mb: 4 }}>
+        <img
+          src="logo.png"
+          alt="Logo MyCafeList"
+          style={{
+            maxWidth: "150px",
+            height: "auto",
+          }}
+        />
       </Box>
+
+      <Typography
+        variant="h4"
+        sx={{
+          fontFamily: "Modak, cursive",
+          color: "#095d40",
+          textAlign: "center",
+          mb: 2,
+        }}
+      >
+        {tab === 0 ? "Connexion" : "Inscription"}
+      </Typography>
 
       {/* onglets pour basculer entre Connexion et Inscription */}
       <Tabs
         value={tab}
         onChange={(event, newValue) => handleTab(newValue)}
         centered
+        textColor="primary"
+        indicatorColor="primary"
+        sx={{
+          mb: 3,
+          "& .MuiTab-root": {
+            textTransform: "none",
+            fontWeight: 500,
+          },
+        }}
       >
         <Tab label="Se Connecter" />
         <Tab label="S'inscrire" />
       </Tabs>
 
       {error && (
-        <Alert severity="error" sx={{ mt: 2 }}>
+        <Alert severity="error" sx={{ mb: 2 }}>
           {error}
         </Alert>
       )}
 
       {/* formulaire */}
-      <Box
-        component="form"
-        onSubmit={handleSubmit}
-        sx={{ display: "flex", flexDirection: "column", gap: 2, mt: 2 }}
+      <Paper
+        elevation={1}
+        sx={{
+          p: 4,
+          borderRadius: 4,
+          backgroundColor: "#f8f8ec",
+          border: "1px solid #d8dbae",
+        }}
       >
-        {tab === 1 && (
+        <Box
+          component="form"
+          onSubmit={handleSubmit}
+          sx={{ display: "flex", flexDirection: "column", gap: 2 }}
+        >
+          {tab === 1 && (
+            <TextField
+              label="Nom"
+              name="Nom"
+              value={formData.Nom}
+              onChange={handleChange}
+              required
+              fullWidth
+            />
+          )}
           <TextField
-            label="Nom"
-            name="Nom"
-            value={formData.Nom}
+            label="Email"
+            name="Email"
+            type="email"
+            value={formData.Email}
             onChange={handleChange}
             required
             fullWidth
           />
-        )}
-        <TextField
-          label="Email"
-          name="Email"
-          type="email"
-          value={formData.Email}
-          onChange={handleChange}
-          required
-          fullWidth
-        />
-        <TextField
-          label="Mot de passe"
-          name="MotDePasse"
-          type="password"
-          value={formData.MotDePasse}
-          onChange={handleChange}
-          required
-          fullWidth
-        />
+          <TextField
+            label="Mot de passe"
+            name="MotDePasse"
+            type="password"
+            value={formData.MotDePasse}
+            onChange={handleChange}
+            required
+            fullWidth
+          />
 
-        <Button type="submit" variant="contained" color="primary" fullWidth>
-          {tab === 0 ? "Se connecter" : "Créer un compte"}
-        </Button>
-      </Box>
+          <Button type="submit" variant="contained" color="primary" fullWidth>
+            {tab === 0 ? "Se connecter" : "Créer un compte"}
+          </Button>
+        </Box>
+      </Paper>
     </Container>
   );
 };
