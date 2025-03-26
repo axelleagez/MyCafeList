@@ -7,6 +7,8 @@ import {
   ListItemButton,
   ListItemText,
   IconButton,
+  Box,
+  Rating,
 } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { useFavorites } from "../contexts/FavoritesContext";
@@ -62,9 +64,24 @@ const FavoritesPage = () => {
                       {cafe.nom || "Nom inconnu"}
                     </Typography>
                   }
-                  secondary={`${cafe.adresse || "Adresse inconnue"}, ${
-                    cafe.ville || "Ville inconnue"
-                  }`}
+                  secondary={
+                    <>
+                      {`${cafe.adresse || "Adresse inconnue"}, ${
+                        cafe.ville || "Ville inconnue"
+                      }`}
+                      <br />
+                      {cafe.note && (
+                        <Box sx={{ mt: 0.5 }}>
+                          <Rating
+                            value={cafe.note}
+                            readOnly
+                            precision={0.5}
+                            size="small"
+                          />
+                        </Box>
+                      )}
+                    </>
+                  }
                 />
                 <IconButton
                   onClick={(e) => {

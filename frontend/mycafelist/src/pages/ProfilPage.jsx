@@ -83,7 +83,24 @@ const ProfilPage = () => {
           </Typography>
           <Typography variant="body1" sx={{ mb: 3 }}>
             <strong>Mode privé :</strong>{" "}
-            <Switch checked={user.modePrive} disabled />
+            <Switch
+              checked={user.modePrive}
+              onChange={async () => {
+                try {
+                  const updatedUser = {
+                    ...user,
+                    modePrive: !user.modePrive,
+                  };
+                  await axios.updateUserMode(updatedUser);
+                  setUser(updatedUser);
+                } catch (error) {
+                  console.error(
+                    "Erreur lors du changement de mode privé :",
+                    error
+                  );
+                }
+              }}
+            />
           </Typography>
 
           <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>

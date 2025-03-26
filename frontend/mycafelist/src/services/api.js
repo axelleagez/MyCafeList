@@ -157,6 +157,17 @@ getUserProfile: async () => {
     throw error;
   }
 },
+
+updateUserMode: async (updatedUser) => {
+  try {
+    const response = await axios.put(`${API_URL}/users/${updatedUser.id}`, updatedUser);
+    return response.data;
+  } catch (error) {
+    console.error("Erreur lors de la mise à jour de l'utilisateur :", error);
+    throw error;
+  }
+},
+
 }
 
 

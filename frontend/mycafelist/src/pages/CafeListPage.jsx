@@ -8,6 +8,8 @@ import {
   ListItemText,
   Paper,
   IconButton,
+  Box, 
+  Rating,
 } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -67,9 +69,24 @@ const CafeListPage = () => {
                       {cafe.nom || "Nom inconnu"}
                     </Typography>
                   }
-                  secondary={`${cafe.adresse || "Adresse inconnue"}, ${
-                    cafe.ville || "Ville inconnue"
-                  }, ${cafe.pays || "Pays inconnu"}`}
+                  secondary={
+                    <>
+                      {`${cafe.adresse || "Adresse inconnue"}, ${
+                        cafe.ville || "Ville inconnue"
+                      }, ${cafe.pays || "Pays inconnu"}`}
+                      <br />
+                      {cafe.note && (
+                        <Box sx={{ mt: 0.5 }}>
+                          <Rating
+                            value={cafe.note}
+                            readOnly
+                            precision={0.5}
+                            size="small"
+                          />
+                        </Box>
+                      )}
+                    </>
+                  }
                 />
                 <IconButton
                   onClick={(e) => {
