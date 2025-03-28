@@ -72,8 +72,24 @@ const AddPage = () => {
   };
 
   return (
-    <Container maxWidth="sm">
-      <Box sx={{ textAlign: "center", mt: 4, mb: 2 }}>
+    <Container maxWidth="sm" sx={{ minHeight: "100vh", pb: 10 }}>
+      <Button
+        onClick={() => navigate(-1)}
+        sx={{
+          color: "#095d40",
+          textTransform: "none",
+          fontWeight: 500,
+          alignSelf: "start",
+          "&:hover": {
+            textDecoration: "underline",
+            textDecorationColor: "#d8dbae",
+          },
+        }}
+      >
+        ← Retour
+      </Button>
+
+      <Box sx={{ textAlign: "center", mb: 2 }}>
         <Typography
           variant="h4"
           sx={{

@@ -6,6 +6,7 @@ import { AuthContext } from "./contexts/AuthContext";
 import Navbar from "./components/Navbar";
 import HomePage from "./pages/HomePage";
 import AddPage from "./pages/AddPage";
+import SharePage from "./pages/SharePage";
 import CafeListPage from "./pages/CafeListPage";
 import CafeDetailsPage from "./pages/CafeDetailsPage";
 import FavoritesPage from "./pages/FavoritesPage";
@@ -48,6 +49,10 @@ function App() {
             <Route
               path="/add"
               element={<PrivateRoute element={<AddPage />} />}
+            />
+            <Route
+              path="/share"
+              element={<PrivateRoute element={<SharePage />} />}
             />
             <Route
               path="/list"

@@ -8,7 +8,8 @@ import {
   ListItemText,
   Paper,
   IconButton,
-  Box, 
+  Box,
+  Button,
   Rating,
 } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
@@ -39,6 +40,22 @@ const CafeListPage = () => {
       >
         Ma Liste de Cafés
       </Typography>
+
+      <Box sx={{ display: "flex", justifyContent: "center", mb: 3 }}>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => navigate("/add")}
+          sx={{
+            textTransform: "none",
+            fontWeight: 500,
+            borderRadius: "20px",
+            px: 3,
+          }}
+        >
+          Ajouter un café
+        </Button>
+      </Box>
 
       {cafes.length ? (
         <List sx={{ display: "flex", flexDirection: "column", gap: 2 }}>

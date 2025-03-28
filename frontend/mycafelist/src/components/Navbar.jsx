@@ -8,8 +8,8 @@ import {
 import {
   Home,
   HomeOutlined,
-  AddCircle,
-  AddCircleOutline,
+  Share,
+  ShareOutlined,
   LocalCafe,
   LocalCafeOutlined,
   Favorite,
@@ -27,8 +27,8 @@ export default function Navbar() {
     switch (location.pathname) {
       case "/home":
         return "/home";
-      case "/add":
-        return "/add";
+      case "/share":
+        return "/share";
       case "/list":
         return "/list";
       case "/favorites":
@@ -89,13 +89,13 @@ export default function Navbar() {
           />
           <BottomNavigationAction
             icon={
-              currentTab() === "/add" ? (
-                <AddCircle fontSize="large" sx={{ color: "#d8dbae" }} />
+              currentTab() === "/share" ? (
+                <Share fontSize="large" sx={{ color: "#d8dbae" }} />
               ) : (
-                <AddCircleOutline fontSize="large" />
+                <ShareOutlined fontSize="large" />
               )
             }
-            value="/add"
+            value="/share"
           />
           <BottomNavigationAction
             icon={

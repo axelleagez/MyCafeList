@@ -38,7 +38,7 @@ const HomePage = () => {
             mb: 1,
           }}
         >
-          Bienvenue sur MyCaféList !
+          Bienvenue sur MyCafeList !
         </Typography>
         <Typography variant="body1" sx={{ color: "#333" }}>
           Cette application est dédiée aux amateurs de cafés et de moments

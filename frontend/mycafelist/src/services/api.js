@@ -168,6 +168,29 @@ updateUserMode: async (updatedUser) => {
   }
 },
 
+//récupérer la liste de tous les utilisateurs
+getUsers: async () => {
+  try {
+    const response = await axios.get(`${API_URL}/users`);
+    return response.data;
+  } catch (error) {
+    console.error("Erreur lors de la récupération des utilisateurs :", error);
+    throw error;
+  }
+},
+
+//récupérer les favoris d'un utilisateur non connecté
+getUserFavorites: async (userId) => {
+  try {
+    const response = await axios.get(`${API_URL}/cafes/user/${userId}`);
+    const favoritesOnly = response.data.filter(cafe => cafe.statutFav); // filtrage favoris
+    return favoritesOnly;
+  } catch (error) {
+    console.error("Erreur lors de la récupération des favoris de l'utilisateur :", error);
+    throw error;
+  }
+},
+
 }
 
 
