@@ -55,6 +55,12 @@ const SharePage = () => {
     setSelectedUser(user);
     setErrorMessage(""); 
 
+    if (user.modePrive) {
+      setUserFavorites([]);
+      setErrorMessage("Ce compte est privé. Vous ne pouvez pas voir ses favoris.");
+      return;
+    }
+
     // récupérer ses cafés favoris
     try {
       setIsLoading(true);
