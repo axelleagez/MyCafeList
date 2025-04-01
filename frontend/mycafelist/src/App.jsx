@@ -12,6 +12,7 @@ import CafeDetailsPage from "./pages/CafeDetailsPage";
 import FavoritesPage from "./pages/FavoritesPage";
 import ProfilPage from "./pages/ProfilPage";
 import ConnectionPage from "./pages/ConnectionPage";
+import OthersCafeDetailsPage from "./pages/OthersCafeDetailsPage";
 import { Box } from "@mui/material";
 import ScrollToTop from "./components/ScrollToTop";
 
@@ -69,6 +70,10 @@ function App() {
             <Route
               path="/profile"
               element={<PrivateRoute element={<ProfilPage />} />}
+            />
+            <Route
+              path="/othersdetails/:id"
+              element={<PrivateRoute element={<OthersCafeDetailsPage />} />}
             />
           </Routes>
         </ThemeProvider>

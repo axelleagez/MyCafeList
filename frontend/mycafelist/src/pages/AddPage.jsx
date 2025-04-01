@@ -9,19 +9,20 @@ import {
   Checkbox,
   MenuItem,
 } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import axios from "../services/api";
 
 const AddPage = () => {
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // pour se déplacer
+  const location = useLocation(); // pour récupérer les données de navigate
 
   const [formData, setFormData] = useState({
     idUser: "",
-    nom: "",
-    adresse: "",
-    ville: "",
-    pays: "",
-    description: "",
+    nom: location.state?.nom ||"",
+    adresse: location.state?.adresse||"",
+    ville: location.state?.ville ||"",
+    pays: location.state?.pays ||"",
+    description: location.state?.description ||"",
     note: "",
     commentaire: "",
     statutFav: false,
@@ -63,7 +64,7 @@ const AddPage = () => {
         note: formData.note ? parseInt(formData.note) : null,
       };
       await axios.addCafe(cafeData);
-      setCafeAjoute(true); // message de confirmation
+      setCafeAjoute(true); //le cafe est bien enregistré
     } catch (err) {
       setError("Une erreur s'est produite. Veuillez réessayer.");
     } finally {
@@ -102,7 +103,7 @@ const AddPage = () => {
         </Typography>
       </Box>
 
-      {/* café ajouté => afficher le message de confirmation */}
+      {/* café ajouté + message de confirmation */}
       {cafeAjoute ? (
         <Box
           sx={{

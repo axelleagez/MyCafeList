@@ -7,22 +7,20 @@ import {
   ListItemButton,
   ListItemText,
   Paper,
-  IconButton,
   CircularProgress,
   Rating,
 } from "@mui/material";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import axios from "../services/api"; 
+import axios from "../services/api";
 import { useNavigate } from "react-router-dom";
 
 const SharePage = () => {
-  const [searchInput, setSearchInput] = useState(""); 
-  const [userOptions, setUserOptions] = useState([]); 
-  const [filteredUsers, setFilteredUsers] = useState([]); 
-  const [selectedUser, setSelectedUser] = useState(null); 
-  const [userFavorites, setUserFavorites] = useState([]); 
-  const [isLoading, setIsLoading] = useState(false); 
-  const [errorMessage, setErrorMessage] = useState(""); 
+  const [searchInput, setSearchInput] = useState("");
+  const [userOptions, setUserOptions] = useState([]);
+  const [filteredUsers, setFilteredUsers] = useState([]);
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [userFavorites, setUserFavorites] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
   // chargement des utilisateurs
@@ -43,8 +41,8 @@ const SharePage = () => {
     if (searchInput === "") {
       setFilteredUsers([]); // entrée vide = on n'affiche rien
     } else {
-      const results = userOptions.filter(user =>
-        user.email.toLowerCase().startsWith(searchInput.toLowerCase()) 
+      const results = userOptions.filter((user) =>
+        user.email.toLowerCase().startsWith(searchInput.toLowerCase())
       );
       setFilteredUsers(results);
     }
@@ -53,11 +51,13 @@ const SharePage = () => {
   // sélectionner user
   const handleUserSelect = async (user) => {
     setSelectedUser(user);
-    setErrorMessage(""); 
+    setErrorMessage("");
 
     if (user.modePrive) {
       setUserFavorites([]);
-      setErrorMessage("Ce compte est privé. Vous ne pouvez pas voir ses favoris.");
+      setErrorMessage(
+        "Ce compte est privé. Vous ne pouvez pas voir ses favoris."
+      );
       return;
     }
 
@@ -85,7 +85,7 @@ const SharePage = () => {
           mb: 3,
         }}
       >
-        Explorer
+        Les favoris des autres
       </Typography>
 
       {/* Champ de texte pour rechercher un utilisateur par email */}
@@ -107,7 +107,7 @@ const SharePage = () => {
         }}
       />
 
-      {/* Afficher la liste des utilisateurs correspondants */}
+      {/* affichage des users */}
       {searchInput && filteredUsers.length > 0 && (
         <List sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
           {filteredUsers.map((user) => (
@@ -137,14 +137,14 @@ const SharePage = () => {
         </List>
       )}
 
-      {/* Si l'utilisateur n'existe pas */}
+      {/* si l'user n'existe pas */}
       {errorMessage && (
         <Typography color="error" sx={{ textAlign: "center", mt: 2 }}>
           {errorMessage}
         </Typography>
       )}
 
-      {/* Afficher les favoris de l'utilisateur sélectionné */}
+      {/* affichage favoris de l'user */}
       {isLoading ? (
         <CircularProgress />
       ) : (
@@ -165,7 +165,7 @@ const SharePage = () => {
                   justifyContent: "space-between",
                   alignItems: "center",
                 }}
-                onClick={() => navigate(`/details/${cafe.id}`)} // redirection vers détails
+                onClick={() => navigate(`/othersdetails/${cafe.id}`)} // redirection vers détails
               >
                 <ListItemText
                   primary={
@@ -193,9 +193,6 @@ const SharePage = () => {
                     </>
                   }
                 />
-                <IconButton disabled>
-                  <FavoriteIcon color="error" />
-                </IconButton>
               </ListItemButton>
             </Paper>
           ))}
