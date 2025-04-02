@@ -87,11 +87,14 @@ const CafeListPage = () => {
                     </Typography>
                   }
                   secondary={
-                    <>
+                    <Typography
+                      component="span"
+                      variant="body2"
+                      color="textSecondary"
+                    >
                       {`${cafe.adresse || "Adresse inconnue"}, ${
                         cafe.ville || "Ville inconnue"
                       }, ${cafe.pays || "Pays inconnu"}`}
-                      <br />
                       {cafe.note && (
                         <Box sx={{ mt: 0.5 }}>
                           <Rating
@@ -102,7 +105,7 @@ const CafeListPage = () => {
                           />
                         </Box>
                       )}
-                    </>
+                    </Typography>
                   }
                 />
                 <IconButton

@@ -52,7 +52,7 @@ const ConnectionPage = () => {
       }
     } catch (err) {
       setError(
-        err.response?.data?.message || "Erreur lors de l'authentification."
+        err.response?.data || "Erreur lors de l'authentification."
       );
     }
   };

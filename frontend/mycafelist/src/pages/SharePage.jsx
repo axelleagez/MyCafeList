@@ -115,9 +115,10 @@ const SharePage = () => {
               key={user.id}
               elevation={1}
               sx={{
-                p: 2,
-                borderRadius: 3,
-                backgroundColor: "#f8f8ec",
+                p: 1,
+                borderRadius: 2,
+                backgroundColor: "#e8f4e1", // Fond vert clair pour effet de suggestion
+                border: "1px solid primary", // Bordure verte pour marquer l'élément
               }}
             >
               <ListItemButton
@@ -125,6 +126,7 @@ const SharePage = () => {
                   display: "flex",
                   justifyContent: "space-between",
                   alignItems: "center",
+                  padding: "8px 10px",
                 }}
                 onClick={() => handleUserSelect(user)} // sélection user
               >
@@ -177,9 +179,13 @@ const SharePage = () => {
                     </Typography>
                   }
                   secondary={
-                    <>
+                    <Typography
+                      component="span"
+                      variant="body2"
+                      color="textSecondary"
+                    >
                       {`${cafe.adresse}, ${cafe.ville}, ${cafe.pays}`}
-                      <br />
+
                       {cafe.note && (
                         <Box sx={{ mt: 0.5 }}>
                           <Rating
@@ -190,7 +196,7 @@ const SharePage = () => {
                           />
                         </Box>
                       )}
-                    </>
+                    </Typography>
                   }
                 />
               </ListItemButton>
