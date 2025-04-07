@@ -183,7 +183,7 @@ getUsers: async () => {
 getUserFavorites: async (userId) => {
   try {
     const response = await axios.get(`${API_URL}/cafes/user/${userId}`);
-    const favoritesOnly = response.data.filter(cafe => cafe.statutFav); // filtrage favoris
+    const favoritesOnly = response.data.filter(cafe => cafe.favStatus); // filtrage favoris
     return favoritesOnly;
   } catch (error) {
     console.error("Erreur lors de la récupération des favoris de l'utilisateur :", error);

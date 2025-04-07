@@ -77,13 +77,13 @@ namespace MyCafeList.Controllers
                 return NotFound();
             }
 
-            cafe.Nom = cafeDTO.Nom;
-            cafe.Adresse = cafeDTO.Adresse;
-            cafe.Ville = cafeDTO.Ville;
-            cafe.Pays = cafeDTO.Pays;
+            cafe.Name = cafeDTO.Name;
+            cafe.Adress = cafeDTO.Adress;
+            cafe.City = cafeDTO.City;
+            cafe.Country = cafeDTO.Country;
             cafe.Description = cafeDTO.Description;
             cafe.Note = cafeDTO.Note;
-            cafe.Commentaire = cafeDTO.Commentaire;
+            cafe.Comment = cafeDTO.Comment;
 
             _context.Entry(cafe).State = EntityState.Modified;
             await _context.SaveChangesAsync();
@@ -115,7 +115,7 @@ namespace MyCafeList.Controllers
             if (cafe == null)
                 return NotFound("Café non trouvé.");
 
-            cafe.StatutFav = !cafe.StatutFav;
+            cafe.FavStatus = !cafe.FavStatus;
 
             _context.Entry(cafe).State = EntityState.Modified;
             await _context.SaveChangesAsync();

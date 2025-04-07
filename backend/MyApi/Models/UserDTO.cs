@@ -3,19 +3,19 @@ namespace MyCafeList.Models;
 public class UserDTO
 {
     public int Id { get; set; }
-    public string? Nom { get; set; } = null!;
+    public string? Name { get; set; } = null!;
     public string Email { get; set; } = null!;
-    public string MotDePasse { get; set; } = null!;
-    public bool ModePrive { get; set; }
+    public string Password { get; set; } = null!;
+    public bool PrivateMode { get; set; }
 
     public UserDTO() { }
 
     public UserDTO(User user)
     {
         Id = user.Id;
-        Nom = user.Nom;
+        Name = user.Name;
         Email = user.Email;
-        MotDePasse = user.MotDePasse;
-        ModePrive = user.ModePrive;
+        Password = user.Password;
+        PrivateMode = user.PrivateMode;
     }
 }

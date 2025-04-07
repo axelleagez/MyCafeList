@@ -17,7 +17,7 @@ import { useNavigate } from "react-router-dom";
 const FavoritesPage = () => {
   const { cafes, toggleFavorite, isLoading } = useFavorites();
   const navigate = useNavigate();
-  const favorites = cafes.filter((c) => c.statutFav);
+  const favorites = cafes.filter((c) => c.favStatus);
 
   if (isLoading) return <CircularProgress />;
 
@@ -61,15 +61,14 @@ const FavoritesPage = () => {
                       variant="h6"
                       sx={{ fontWeight: 600, color: "#333" }}
                     >
-                      {cafe.nom || "Nom inconnu"}
+                      {cafe.name || "Nom inconnu"}
                     </Typography>
                   }
                   secondary={
-                    <>
-                      {`${cafe.adresse || "Adresse inconnue"}, ${
-                        cafe.ville || "Ville inconnue"
+                    <Typography>
+                      {`${cafe.adress || "Adresse inconnue"}, ${
+                        cafe.city || "Ville inconnue"
                       }`}
-                      <br />
                       {cafe.note && (
                         <Box sx={{ mt: 0.5 }}>
                           <Rating
@@ -80,7 +79,7 @@ const FavoritesPage = () => {
                           />
                         </Box>
                       )}
-                    </>
+                    </Typography>
                   }
                 />
                 <IconButton

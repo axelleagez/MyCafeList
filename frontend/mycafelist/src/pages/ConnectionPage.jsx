@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
-import api from "../services/api";
+import axios from "../services/api";
 
 import {
   Container,
@@ -20,9 +20,9 @@ const ConnectionPage = () => {
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    Nom: "",
+    Name: "",
     Email: "",
-    MotDePasse: "",
+    Password: "",
   });
   const [isLoginMode, setIsLoginMode] = useState(true);
   const [error, setError] = useState("");
@@ -42,8 +42,8 @@ const ConnectionPage = () => {
 
     try {
       const response = isLoginMode
-        ? await api.login(formData)
-        : await api.register(formData);
+        ? await axios.login(formData)
+        : await axios.register(formData);
       if (response.id) {
         login(response.id);
         navigate("/home");
@@ -125,8 +125,8 @@ const ConnectionPage = () => {
           {tab === 1 && (
             <TextField
               label="Nom"
-              name="Nom"
-              value={formData.Nom}
+              name="Name"
+              value={formData.Name}
               onChange={handleChange}
               required
               fullWidth
@@ -143,9 +143,9 @@ const ConnectionPage = () => {
           />
           <TextField
             label="Mot de passe"
-            name="MotDePasse"
+            name="Password"
             type="password"
-            value={formData.MotDePasse}
+            value={formData.Password}
             onChange={handleChange}
             required
             fullWidth

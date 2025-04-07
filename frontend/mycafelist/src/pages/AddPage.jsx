@@ -18,14 +18,14 @@ const AddPage = () => {
 
   const [formData, setFormData] = useState({
     idUser: "",
-    nom: location.state?.nom ||"",
-    adresse: location.state?.adresse||"",
-    ville: location.state?.ville ||"",
-    pays: location.state?.pays ||"",
+    name: location.state?.name ||"",
+    adress: location.state?.adress||"",
+    city: location.state?.city ||"",
+    country: location.state?.country ||"",
     description: location.state?.description ||"",
     note: "",
-    commentaire: "",
-    statutFav: false,
+    comment: "",
+    favStatus: false,
   });
 
   const [loading, setLoading] = useState(false);
@@ -149,14 +149,14 @@ const AddPage = () => {
               onClick={() => {
                 setCafeAjoute(false);
                 setFormData({
-                  nom: "",
-                  adresse: "",
-                  ville: "",
-                  pays: "",
+                  name: "",
+                  adress: "",
+                  city: "",
+                  country: "",
                   description: "",
                   note: null,
-                  commentaire: "",
-                  statutFav: false,
+                  comment: "",
+                  favStatus: false,
                 });
               }}
             >
@@ -182,32 +182,32 @@ const AddPage = () => {
         >
           <TextField
             label="Nom du café"
-            name="nom"
-            value={formData.nom}
+            name="name"
+            value={formData.name}
             onChange={handleChange}
             required
             fullWidth
           />
           <TextField
             label="Adresse"
-            name="adresse"
-            value={formData.adresse}
+            name="adress"
+            value={formData.adress}
             onChange={handleChange}
             required
             fullWidth
           />
           <TextField
             label="Ville"
-            name="ville"
-            value={formData.ville}
+            name="city"
+            value={formData.city}
             onChange={handleChange}
             required
             fullWidth
           />
           <TextField
             label="Pays"
-            name="pays"
-            value={formData.pays}
+            name="country"
+            value={formData.country}
             onChange={handleChange}
             required
             fullWidth
@@ -239,8 +239,8 @@ const AddPage = () => {
 
           <TextField
             label="Commentaire"
-            name="commentaire"
-            value={formData.commentaire}
+            name="comment"
+            value={formData.comment}
             onChange={handleChange}
             multiline
             rows={2}
@@ -250,9 +250,9 @@ const AddPage = () => {
           <FormControlLabel
             control={
               <Checkbox
-                checked={formData.statutFav}
+                checked={formData.favStatus}
                 onChange={handleChange}
-                name="statutFav"
+                name="favStatus"
                 color="primary"
               />
             }

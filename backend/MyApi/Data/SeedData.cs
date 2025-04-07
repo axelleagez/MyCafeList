@@ -12,55 +12,51 @@ public class SeedData
             return;
         }
 
-        // Création de l'utilisateur fictif
         User user1 = new User
         {
-            Nom = "UtilisateurTest",
+            Name = "UtilisateurTest",
             Email = "aagez@ensc.fr",
-            MotDePasse = "mdp",
-            ModePrive = false,
+            Password = "mdp",
+            PrivateMode = false,
         };
         User user2 = new User
         {
-            Nom = "UtilisateurTest2",
+            Name = "UtilisateurTest2",
             Email = "fpicavet@ensc.fr",
-            MotDePasse = "mdp",
-            ModePrive = false,
+            Password = "mdp",
+            PrivateMode = false,
         };
 
         context.Users.AddRange(user1, user2);
         context.SaveChanges();
 
-        // Add café1
         Cafe cafe1 = new Cafe
         {
-            IdUser = user1.Id, // ID utilisateur fictif
-            Nom = "CaféTest1",
-            Adresse = "Adresse Test 1",
-            Ville = "Bordeaux",
-            Pays = "France",
+            IdUser = user1.Id,
+            Name = "CaféTest1",
+            Adress = "Adresse Test 1",
+            City = "Bordeaux",
+            Country = "France",
             Description = "Test test test 1",
             Note = null,
-            Commentaire = null,
-            DateCreation = DateTime.Now,
-            StatutFav = false,
+            Comment = null,
+            CreationDate = DateTime.Now,
+            FavStatus = false,
         };
-        // Add café2
         Cafe cafe2 = new Cafe
         {
-            IdUser = user1.Id, // ID utilisateur fictif
-            Nom = "CaféTest2",
-            Adresse = "Adresse Test 2",
-            Ville = "Bordeaux",
-            Pays = "France",
+            IdUser = user1.Id,
+            Name = "CaféTest2",
+            Adress = "Adresse Test 2",
+            City = "Bordeaux",
+            Country = "France",
             Description = null,
             Note = null,
-            Commentaire = null,
-            DateCreation = DateTime.Now,
-            StatutFav = false,
+            Comment = null,
+            CreationDate = DateTime.Now,
+            FavStatus = false,
         };
 
-        // Ajout des cafés à la base de données
         context.Cafes.AddRange(cafe1, cafe2);
         context.SaveChanges();
     }

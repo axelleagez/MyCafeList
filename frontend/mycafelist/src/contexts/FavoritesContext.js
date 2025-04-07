@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect, useCallback } from 'react';
-import api from '../services/api';
+import axios from '../services/api';
 
 const FavoritesContext = createContext();
 
@@ -12,7 +12,7 @@ export const FavoritesProvider = ({ children }) => {
   const fetchCafes = useCallback(async () => {
     setIsLoading(true);
     try {
-      const data = await api.getUserCafes();
+      const data = await axios.getUserCafes();
       setCafes(data);
     } catch (error) {
       console.error("Erreur chargement cafés :", error);
@@ -26,15 +26,15 @@ export const FavoritesProvider = ({ children }) => {
   }, [fetchCafes]);
 
   const toggleFavorite = async (id) => {
-    const updatedCafe = await api.toggleFavorite(id);
+    const updatedCafe = await axios.toggleFavorite(id);
     setCafes((prevCafes) =>
       prevCafes.map((cafe) =>
-        cafe.id === id ? { ...cafe, statutFav: updatedCafe.statutFav } : cafe
+        cafe.id === id ? { ...cafe, favStatus: updatedCafe.favStatus } : cafe
       )
     );
   };
 
-  const isFavorite = (id) => cafes.some(c => c.id === id && c.statutFav);
+  const isFavorite = (id) => cafes.some(c => c.id === id && c.favStatus);
 
   return (
     <FavoritesContext.Provider value={{ cafes, toggleFavorite, isFavorite, fetchCafes, isLoading }}>

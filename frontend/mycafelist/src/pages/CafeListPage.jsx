@@ -83,7 +83,7 @@ const CafeListPage = () => {
                       variant="h6"
                       sx={{ fontWeight: 600, color: "#333" }}
                     >
-                      {cafe.nom || "Nom inconnu"}
+                      {cafe.name || "Nom inconnu"}
                     </Typography>
                   }
                   secondary={
@@ -92,9 +92,9 @@ const CafeListPage = () => {
                       variant="body2"
                       color="textSecondary"
                     >
-                      {`${cafe.adresse || "Adresse inconnue"}, ${
-                        cafe.ville || "Ville inconnue"
-                      }, ${cafe.pays || "Pays inconnu"}`}
+                      {`${cafe.adress || "Adresse inconnue"}, ${
+                        cafe.city || "Ville inconnue"
+                      }, ${cafe.country || "Pays inconnu"}`}
                       {cafe.note && (
                         <Box sx={{ mt: 0.5 }}>
                           <Rating
@@ -113,9 +113,9 @@ const CafeListPage = () => {
                     e.stopPropagation();
                     toggleFavorite(cafe.id);
                   }}
-                  color={cafe.statutFav ? "error" : "default"}
+                  color={cafe.favStatus ? "error" : "default"}
                 >
-                  {cafe.statutFav ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+                  {cafe.favStatus ? <FavoriteIcon /> : <FavoriteBorderIcon />}
                 </IconButton>
               </ListItemButton>
             </Paper>

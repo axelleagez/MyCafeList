@@ -115,7 +115,7 @@ const CafeDetailsPage = () => {
               fullWidth
               label="Nom"
               name="nom"
-              value={cafe.nom}
+              value={cafe.name}
               onChange={handleChange}
             />
           ) : (
@@ -123,7 +123,7 @@ const CafeDetailsPage = () => {
               variant="h5"
               sx={{ fontFamily: "Modak, cursive", color: "#095d40" }}
             >
-              {cafe.nom}
+              {cafe.name}
             </Typography>
           )}
           <IconButton
@@ -151,7 +151,7 @@ const CafeDetailsPage = () => {
                   name={field}
                   value={cafe[field] || ""}
                   onChange={handleChange}
-                  multiline={["description", "commentaire"].includes(field)}
+                  multiline={["description", "comment"].includes(field)}
                 />
               ) : (
                 <ListItemText

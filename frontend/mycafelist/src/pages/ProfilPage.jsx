@@ -76,7 +76,7 @@ const ProfilPage = () => {
           }}
         >
           <Typography variant="body1" sx={{ mb: 1 }}>
-            <strong>Nom :</strong> {user.nom}
+            <strong>Nom :</strong> {user.name}
           </Typography>
           <Typography variant="body1" sx={{ mb: 1 }}>
             <strong>Email :</strong> {user.email}
@@ -84,12 +84,12 @@ const ProfilPage = () => {
           <Typography variant="body1" sx={{ mb: 3 }}>
             <strong>Mode privé :</strong>{" "}
             <Switch
-              checked={user.modePrive}
+              checked={user.privateMode}
               onChange={async () => {
                 try {
                   const updatedUser = {
                     ...user,
-                    modePrive: !user.modePrive,
+                    privateMode : !user.privateMode,
                   };
                   await axios.updateUserMode(updatedUser);
                   setUser(updatedUser);

@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MyCafeList.Models;
 
-//controller pour les cafés : post pour s'enregistrer, post pour se connecter, get avec id, put avec id et delete avec id
 namespace MyCafeList.Controllers
 {
     [ApiController]
@@ -45,12 +44,12 @@ namespace MyCafeList.Controllers
         [HttpPost("login")]
         public async Task<ActionResult<UserDTO>> Login([FromBody] UserDTO loginDTO)
         {
-            if (string.IsNullOrEmpty(loginDTO.Email) || string.IsNullOrEmpty(loginDTO.MotDePasse))
+            if (string.IsNullOrEmpty(loginDTO.Email) || string.IsNullOrEmpty(loginDTO.Password))
             {
                 return BadRequest("L'email et le mot de passe sont requis.");
             }
             var user = await _context.Users.SingleOrDefaultAsync(u =>
-                u.Email == loginDTO.Email && u.MotDePasse == loginDTO.MotDePasse
+                u.Email == loginDTO.Email && u.Password == loginDTO.Password
             );
 
             if (user == null)
@@ -61,10 +60,10 @@ namespace MyCafeList.Controllers
             return new UserDTO
             {
                 Id = user.Id,
-                Nom = user.Nom, // Le nom de l'utilisateur est récupéré depuis la base
+                Name = user.Name,
                 Email = user.Email,
-                MotDePasse = user.MotDePasse,
-                ModePrive = user.ModePrive, // Mode privé récupéré également
+                Password = user.Password,
+                PrivateMode = user.PrivateMode,
             };
         }
 
@@ -97,10 +96,10 @@ namespace MyCafeList.Controllers
                 return NotFound("Utilisateur introuvable.");
             }
 
-            user.Nom = userDTO.Nom;
+            user.Name = userDTO.Name;
             user.Email = userDTO.Email;
-            user.MotDePasse = userDTO.MotDePasse;
-            user.ModePrive = userDTO.ModePrive;
+            user.Password = userDTO.Password;
+            user.PrivateMode = userDTO.PrivateMode;
 
             _context.Entry(user).State = EntityState.Modified;
             await _context.SaveChangesAsync();

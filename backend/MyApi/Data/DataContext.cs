@@ -10,7 +10,6 @@ public class DataContext : DbContext
 
     public DataContext()
     {
-        // Définition du chemin vers la base de données SQLite
         DbPath = "ApiCafe.db";
     }
 
@@ -27,6 +26,6 @@ public class DataContext : DbContext
             .HasOne(c => c.User)
             .WithMany(u => u.Cafes)
             .HasForeignKey(c => c.IdUser)
-            .OnDelete(DeleteBehavior.Cascade); // Optionnel : supprime les cafés si l'utilisateur est supprimé
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

@@ -1,7 +1,7 @@
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 
-//accepter les requetes du front (CORS)
+//accepter les requetes du front
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(
@@ -13,8 +13,6 @@ builder.Services.AddCors(options =>
     );
 });
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<DataContext>();
@@ -24,9 +22,8 @@ var app = builder.Build();
 //pour activer le CORS
 app.UseCors("AllowAll");
 
-// SeedData.Init();
+//SeedData.Init();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

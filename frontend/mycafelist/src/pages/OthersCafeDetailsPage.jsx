@@ -40,10 +40,10 @@ const OthersCafeDetailsPage = () => {
     try {
         navigate("/add", {
           state: {
-            nom: cafe.nom,
-            adresse: cafe.adresse,
-            ville: cafe.ville,
-            pays: cafe.pays,
+            name: cafe.name,
+            adress: cafe.adress,
+            city: cafe.city,
+            country: cafe.country,
             description: cafe.description,
           },
         });
@@ -97,18 +97,18 @@ const OthersCafeDetailsPage = () => {
             variant="h5"
             sx={{ fontFamily: "Modak, cursive", color: "#095d40" }}
           >
-            {cafe.nom}
+            {cafe.name}
           </Typography>
         </Box>
 
         <List>
           {[
-            "adresse",
-            "ville",
-            "pays",
+            "adress",
+            "city",
+            "country",
             "description",
             "note",
-            "commentaire",
+            "comment",
           ].map((field) => (
             <ListItem key={field}>
               <ListItemText

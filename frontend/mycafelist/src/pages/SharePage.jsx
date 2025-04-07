@@ -53,7 +53,7 @@ const SharePage = () => {
     setSelectedUser(user);
     setErrorMessage("");
 
-    if (user.modePrive) {
+    if (user.privateMode) {
       setUserFavorites([]);
       setErrorMessage(
         "Ce compte est privé. Vous ne pouvez pas voir ses favoris."
@@ -175,7 +175,7 @@ const SharePage = () => {
                       variant="h6"
                       sx={{ fontWeight: 600, color: "#333" }}
                     >
-                      {cafe.nom}
+                      {cafe.name}
                     </Typography>
                   }
                   secondary={
@@ -184,7 +184,7 @@ const SharePage = () => {
                       variant="body2"
                       color="textSecondary"
                     >
-                      {`${cafe.adresse}, ${cafe.ville}, ${cafe.pays}`}
+                      {`${cafe.adress}, ${cafe.city}, ${cafe.country}`}
 
                       {cafe.note && (
                         <Box sx={{ mt: 0.5 }}>
