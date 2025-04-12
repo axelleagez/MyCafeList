@@ -1,3 +1,7 @@
+//ce document définit la page de détails des cafés des autres
+//elle permet à un utilisateur de consulter les détails d'un café appartenant à un autre utilisateur et de l'ajouter à sa propre liste
+//elle est différente de CafeDetailsPage parce qu'elle concerne les cafés des utilisateurs que l'on regarde, pas nos cafés
+
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import {
@@ -14,6 +18,7 @@ import {
 } from "@mui/material";
 import axios from "../services/api";
 
+//composants de la page
 const OthersCafeDetailsPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -21,6 +26,7 @@ const OthersCafeDetailsPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
+  // useEffect pour charger les détails du café
   useEffect(() => {
     const fetchCafeDetails = async () => {
       try {
@@ -36,21 +42,22 @@ const OthersCafeDetailsPage = () => {
     fetchCafeDetails();
   }, [id]);
 
+  // fonction pour rediriger l'utilisateur vers la page d'ajout et pré-remplir le formulaire avec les détails du café
   const handleAddToMyCafes = async () => {
     try {
-        navigate("/add", {
-          state: {
-            name: cafe.name,
-            adress: cafe.adress,
-            city: cafe.city,
-            country: cafe.country,
-            description: cafe.description,
-          },
-        });
-      } catch (err) {
-        setError("Erreur lors de l'ajout du café.");
-      }
-    };
+      navigate("/add", {
+        state: {
+          name: cafe.name,
+          adress: cafe.adress,
+          city: cafe.city,
+          country: cafe.country,
+          description: cafe.description,
+        },
+      });
+    } catch (err) {
+      setError("Erreur lors de l'ajout du café.");
+    }
+  };
 
   if (loading) return <CircularProgress />;
   if (error || !cafe)
@@ -62,6 +69,7 @@ const OthersCafeDetailsPage = () => {
 
   return (
     <Container maxWidth="sm" sx={{ minHeight: "100vh", pb: 10 }}>
+      {/* bouton pour revenir à la page précédente */}
       <Button
         onClick={() => navigate(-1)}
         sx={{
@@ -87,6 +95,7 @@ const OthersCafeDetailsPage = () => {
           backgroundColor: "#f8f8ec",
         }}
       >
+        {/* en-tête avec le nom du café */}
         <Box
           display="flex"
           justifyContent="space-between"
@@ -101,14 +110,15 @@ const OthersCafeDetailsPage = () => {
           </Typography>
         </Box>
 
+        {/* liste des infos détaillées du café */}
         <List>
           {[
-            "adress",
-            "city",
-            "country",
+            "adresse",
+            "ville",
+            "pays",
             "description",
             "note",
-            "comment",
+            "commentaire",
           ].map((field) => (
             <ListItem key={field}>
               <ListItemText
@@ -119,6 +129,7 @@ const OthersCafeDetailsPage = () => {
           ))}
         </List>
 
+        {/* bouton pour ajouter le café de l'autre user à sa propre liste de cafés */}
         <Box mt={3}>
           <Button variant="contained" fullWidth onClick={handleAddToMyCafes}>
             Ajouter à mes cafés

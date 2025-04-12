@@ -1,3 +1,5 @@
+//ce document définit un composant Navbar qui affiche une barre de navigation fixe en bas de l'écran
+
 import React from "react";
 import {
   BottomNavigation,
@@ -20,9 +22,10 @@ import {
 import { useNavigate, useLocation } from "react-router-dom";
 
 export default function Navbar() {
-  const navigate = useNavigate();
-  const location = useLocation();
+  const navigate = useNavigate(); //pour changer de page
+  const location = useLocation(); //pour récupérer le chemin actuel
 
+  //fonction pour déterminer l'onglet actuellement actif
   const currentTab = () => {
     switch (location.pathname) {
       case "/home":
@@ -36,11 +39,12 @@ export default function Navbar() {
       case "/profile":
         return "/profile";
       default:
-        return "/home";
+        return "/home"; // si l'url n'est pas reconnue, on revient à l'accueil
     }
   };
 
   return (
+    //la navbar est fixée en bas 
     <Box
       sx={{
         position: "fixed",
@@ -52,18 +56,19 @@ export default function Navbar() {
         zIndex: 1000,
       }}
     >
-      <Paper
+      <Paper 
         sx={{
           borderRadius: "50px",
           px: 2,
           width: "90%",
           maxWidth: 500,
-          backgroundColor: "#2F5233",
+          backgroundColor: "#2F5233", // vert foncé
         }}
       >
-        <BottomNavigation
-          value={currentTab()}
-          onChange={(event, newValue) => navigate(newValue)}
+       {/*on prend l'onglet actif et on navigue au clic*/}
+        <BottomNavigation 
+          value={currentTab()} 
+          onChange={(event, newValue) => navigate(newValue)} 
           showLabels={false}
           sx={{
             height: "60px",
@@ -77,7 +82,8 @@ export default function Navbar() {
             },
           }}
         >
-          <BottomNavigationAction
+          {/*les icones sont vides et se remplissent si elles correspondent à l'onglet actif*/}
+          <BottomNavigationAction 
             icon={
               currentTab() === "/home" ? (
                 <Home fontSize="large" sx={{ color: "#d8dbae" }} />

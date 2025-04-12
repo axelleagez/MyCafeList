@@ -1,9 +1,11 @@
+//ce document est un contrôleur API pour la classe des cafés
+
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MyCafeList.Models;
 
-//controller pour les cafés : post, get avec id, put avec id et delete avec id
+//controller pour les cafés : get, get avec id, get avec user id, post, put avec id, put favorite avec id et delete avec id
 namespace MyCafeList.Controllers
 {
     [ApiController]
@@ -91,22 +93,6 @@ namespace MyCafeList.Controllers
             return NoContent();
         }
 
-        // DELETE: api/cafes/{id}
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCafe(int id)
-        {
-            var cafe = await _context.Cafes.FindAsync(id);
-            if (cafe == null)
-            {
-                return NotFound();
-            }
-
-            _context.Cafes.Remove(cafe);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
         // PUT: api/cafes/favorite/{id}
         [HttpPut("favorite/{id}")]
         public async Task<IActionResult> ToggleFavorite(int id)
@@ -121,6 +107,22 @@ namespace MyCafeList.Controllers
             await _context.SaveChangesAsync();
 
             return Ok(new CafeDTO(cafe));
+        }
+
+        // DELETE: api/cafes/{id}
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteCafe(int id)
+        {
+            var cafe = await _context.Cafes.FindAsync(id);
+            if (cafe == null)
+            {
+                return NotFound();
+            }
+
+            _context.Cafes.Remove(cafe);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
         }
     }
 }

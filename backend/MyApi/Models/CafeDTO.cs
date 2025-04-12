@@ -1,3 +1,6 @@
+//ce dpcument définit la classe CafeDTO
+//il permet de faciliter le transfert de données back/front sans exposer directement la classe de base
+
 namespace MyCafeList.Models;
 
 public class CafeDTO
@@ -9,8 +12,6 @@ public class CafeDTO
     public string City { get; set; } = null!;
     public string Country { get; set; } = null!;
     public string? Description { get; set; }
-
-    //public string? ImageUrl { get; set; }
     public int? Note { get; set; }
     public string? Comment { get; set; }
     public DateTime CreationDate { get; set; }
@@ -18,6 +19,7 @@ public class CafeDTO
 
     public CafeDTO() { }
 
+    //constructeur pour créer un DTO à partir d'un café
     public CafeDTO(Cafe cafe)
     {
         Id = cafe.Id;
@@ -27,7 +29,6 @@ public class CafeDTO
         City = cafe.City;
         Country = cafe.Country;
         Description = cafe.Description;
-        //ImageUrl = cafe.ImageUrl;
         Note = cafe.Note;
         Comment = cafe.Comment;
         CreationDate = cafe.CreationDate;

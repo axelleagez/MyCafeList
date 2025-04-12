@@ -1,3 +1,6 @@
+//ce document est un initialisateur de données
+//il insère un jeu de données de base dans la base de données
+
 using Microsoft.EntityFrameworkCore;
 using MyCafeList.Models;
 
@@ -5,13 +8,16 @@ public class SeedData
 {
     public static void Init()
     {
+        //déclaration du contexte pour accéder à la bdd
         using var context = new DataContext();
 
+        //si des cafés ou des users existent déjà dans notre bdd, on ne fait rien
         if (context.Cafes.Any() || context.Users.Any())
         {
             return;
         }
 
+        //création de deux users initiaux
         User user1 = new User
         {
             Name = "UtilisateurTest",
@@ -27,9 +33,11 @@ public class SeedData
             PrivateMode = false,
         };
 
+        //on les enregistre dans la bdd
         context.Users.AddRange(user1, user2);
         context.SaveChanges();
 
+        //création de deux cafés initiaux
         Cafe cafe1 = new Cafe
         {
             IdUser = user1.Id,
@@ -57,6 +65,7 @@ public class SeedData
             FavStatus = false,
         };
 
+        //on les enregistre dans la bdd
         context.Cafes.AddRange(cafe1, cafe2);
         context.SaveChanges();
     }

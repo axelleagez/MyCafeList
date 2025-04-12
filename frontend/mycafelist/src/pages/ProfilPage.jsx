@@ -1,3 +1,6 @@
+//ce document définit la page de profil
+//elle permet d'afficher les infos du profil, de se déconnecter, de changer le mode privé ou de supprimer le compte
+
 import {
   Container,
   Typography,
@@ -11,11 +14,13 @@ import { AuthContext } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import axios from "../services/api";
 
+//composants de la page
 const ProfilPage = () => {
   const { logout } = useContext(AuthContext);
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
 
+  // useEffect pour récupérer les infos du profil
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
@@ -31,11 +36,13 @@ const ProfilPage = () => {
     fetchUserProfile();
   }, []);
 
+  // fonction pour déconnecter l'utilisateur et le rediriger vers la page d'accueil
   const handleLogout = () => {
     logout();
     navigate("/");
   };
 
+  // fonction pour supprimer le compte après confirmation utilisateur
   const handleDeleteAccount = async () => {
     if (
       window.confirm(
@@ -52,6 +59,7 @@ const ProfilPage = () => {
 
   return (
     <Container maxWidth="sm" sx={{ minHeight: "100vh", pt: 4, pb: 10 }}>
+      {/* titre de la page de profil */}
       <Typography
         variant="h4"
         sx={{
@@ -64,6 +72,7 @@ const ProfilPage = () => {
         Mon Profil
       </Typography>
 
+      {/* affichage conditionnel ie donner les données sinon etre en chargement */}
       {user ? (
         <Paper
           elevation={1}
@@ -75,21 +84,24 @@ const ProfilPage = () => {
             textAlign: "left",
           }}
         >
+          {/* affichage des infos de l'utilisateur */}
           <Typography variant="body1" sx={{ mb: 1 }}>
             <strong>Nom :</strong> {user.name}
           </Typography>
           <Typography variant="body1" sx={{ mb: 1 }}>
             <strong>Email :</strong> {user.email}
           </Typography>
+          {/* affichage du mode privé avec un interrupteur pour le changer */}
           <Typography variant="body1" sx={{ mb: 3 }}>
             <strong>Mode privé :</strong>{" "}
             <Switch
               checked={user.privateMode}
               onChange={async () => {
                 try {
+                  // pour inverser le mode privé et mettre à jour l'user via l'API
                   const updatedUser = {
                     ...user,
-                    privateMode : !user.privateMode,
+                    privateMode: !user.privateMode,
                   };
                   await axios.updateUserMode(updatedUser);
                   setUser(updatedUser);
@@ -104,9 +116,11 @@ const ProfilPage = () => {
           </Typography>
 
           <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+            {/* bouton pour se déconnecter */}
             <Button variant="contained" color="primary" onClick={handleLogout}>
               Se déconnecter
             </Button>
+            {/* bouton pour supprimer son compte */}
             <Button
               variant="outlined"
               color="error"
@@ -121,6 +135,7 @@ const ProfilPage = () => {
           Chargement des informations...
         </Typography>
       )}
+      {/* logo affiché en bas de page */}
       <Box
         sx={{
           position: "fixed",

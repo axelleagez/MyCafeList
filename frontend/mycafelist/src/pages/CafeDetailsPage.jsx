@@ -1,3 +1,6 @@
+//ce document définit une page de détails pour un café
+//elle permet d'afficher, de modifier et de supprimer les informations d'un café
+
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import {
@@ -17,6 +20,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import axios from "../services/api";
 import { useFavorites } from "../contexts/FavoritesContext";
 
+//composants de la page
 const CafeDetailsPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -26,6 +30,7 @@ const CafeDetailsPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
+  //useEffect pour récupérer les détails du café
   useEffect(() => {
     const fetchCafeDetails = async () => {
       try {
@@ -41,14 +46,17 @@ const CafeDetailsPage = () => {
     fetchCafeDetails();
   }, [id]);
 
+  //fonction pour basculer dans le mode édition
   const handleEditToggle = () => {
     setEditable(!editable);
   };
 
+  //fonction pour gérer les changements dans les champs du formulaire
   const handleChange = (e) => {
     setCafe({ ...cafe, [e.target.name]: e.target.value });
   };
 
+  // fonction pour sauvegarder les modifications
   const handleSave = async () => {
     try {
       await axios.updateCafe(cafe.id, cafe);
@@ -58,6 +66,7 @@ const CafeDetailsPage = () => {
     }
   };
 
+  // fonction pour supprimer le café après confirmation
   const handleDelete = async () => {
     if (window.confirm("Supprimer ce café ? Cette action est irréversible.")) {
       try {
@@ -69,6 +78,7 @@ const CafeDetailsPage = () => {
     }
   };
 
+  // indicateur de chargement et message d'erreur
   if (loading) return <CircularProgress />;
   if (error || !cafe)
     return (
@@ -79,6 +89,7 @@ const CafeDetailsPage = () => {
 
   return (
     <Container maxWidth="sm" sx={{ minHeight: "100vh", pb: 10 }}>
+      {/* bouton retour */}
       <Button
         onClick={() => navigate(-1)}
         sx={{
@@ -104,13 +115,14 @@ const CafeDetailsPage = () => {
           backgroundColor: "#f8f8ec",
         }}
       >
+        {/* en-tête avec nom et bouton de favori */}
         <Box
           display="flex"
           justifyContent="space-between"
           alignItems="center"
           mb={2}
         >
-          {editable ? (
+          {editable ? ( //si mode édition ativé, on affiche un champ de texte
             <TextField
               fullWidth
               label="Nom"
@@ -119,6 +131,7 @@ const CafeDetailsPage = () => {
               onChange={handleChange}
             />
           ) : (
+            //sinon on affiche juste le nom
             <Typography
               variant="h5"
               sx={{ fontFamily: "Modak, cursive", color: "#095d40" }}
@@ -126,6 +139,7 @@ const CafeDetailsPage = () => {
               {cafe.name}
             </Typography>
           )}
+          {/* bouton pour basculer le statut favori */}
           <IconButton
             onClick={() => toggleFavorite(cafe.id)}
             color={isFavorite(cafe.id) ? "error" : "default"}
@@ -134,6 +148,7 @@ const CafeDetailsPage = () => {
           </IconButton>
         </Box>
 
+        {/* liste des détails du café */}
         <List>
           {[
             "adresse",
@@ -144,7 +159,7 @@ const CafeDetailsPage = () => {
             "commentaire",
           ].map((field) => (
             <ListItem key={field}>
-              {editable ? (
+              {editable ? ( // si mode édition, afficher un champ de texte pour modifier le champ correspondant
                 <TextField
                   fullWidth
                   label={field.charAt(0).toUpperCase() + field.slice(1)}
@@ -164,16 +179,18 @@ const CafeDetailsPage = () => {
         </List>
 
         <Box mt={3}>
-          {editable ? (
+          {editable ? ( // Si mode édition, afficher un bouton pour sauvegarder les modifications
             <Button variant="contained" fullWidth onClick={handleSave}>
               Enregistrer
             </Button>
           ) : (
+            // sinon, affichage d'un bouton pour activer le mode édition
             <Button variant="outlined" fullWidth onClick={handleEditToggle}>
               Modifier
             </Button>
           )}
         </Box>
+        {/* bouton pour supprimer le café */}
         <Button
           variant="outlined"
           color="error"

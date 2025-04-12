@@ -1,3 +1,6 @@
+//ce document définit la page d'ajout d'un café
+//cette page permet à l'utilisateur de remplir un formulaire pour enregistrer un nouveau café dans sa liste
+
 import React, { useState } from "react";
 import {
   Container,
@@ -12,35 +15,35 @@ import {
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "../services/api";
 
+//création du composant AddPage
 const AddPage = () => {
-  const navigate = useNavigate(); // pour se déplacer
-  const location = useLocation(); // pour récupérer les données de navigate
-
+  const navigate = useNavigate(); 
+  const location = useLocation();
+  //déclaration de l'état initial du formulaire avec pré remplissage
   const [formData, setFormData] = useState({
     idUser: "",
-    name: location.state?.name ||"",
-    adress: location.state?.adress||"",
-    city: location.state?.city ||"",
-    country: location.state?.country ||"",
-    description: location.state?.description ||"",
+    name: location.state?.name || "",
+    adress: location.state?.adress || "",
+    city: location.state?.city || "",
+    country: location.state?.country || "",
+    description: location.state?.description || "",
     note: "",
     comment: "",
     favStatus: false,
   });
+  const [loading, setLoading] = useState(false); 
+  const [error, setError] = useState(""); 
+  const [cafeAjoute, setCafeAjoute] = useState(false); 
 
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [cafeAjoute, setCafeAjoute] = useState(false); // Nouvel état pour confirmation
-
-  // gestion des chgmts du form
+  // fonction de gestion des changements du form
   const handleChange = (event) => {
     const { name, value, type, checked } = event.target;
     setFormData({
       ...formData,
       [name]:
-        type === "checkbox"
+        type === "checkbox" //si c'est une case à cocher
           ? checked
-          : name === "note"
+          : name === "note" //dans "note", on convertir la valeur en nombre
           ? value
             ? parseInt(value)
             : null
@@ -48,22 +51,24 @@ const AddPage = () => {
     });
   };
 
-  // envoi
+  // fonction pour gérer l'envoi du forumulaire
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
     setError("");
 
     try {
+      //récupération de l'ID pour associer le café à l'user connecté
       const userId = localStorage.getItem("userId");
       if (!userId) throw new Error("Utilisateur non connecté");
 
+      //préparation des données à envoyer
       const cafeData = {
         ...formData,
         idUser: parseInt(userId),
         note: formData.note ? parseInt(formData.note) : null,
       };
-      await axios.addCafe(cafeData);
+      await axios.addCafe(cafeData); //appel à API
       setCafeAjoute(true); //le cafe est bien enregistré
     } catch (err) {
       setError("Une erreur s'est produite. Veuillez réessayer.");
@@ -74,6 +79,7 @@ const AddPage = () => {
 
   return (
     <Container maxWidth="sm" sx={{ minHeight: "100vh", pb: 10 }}>
+      {/*bouton retour*/}
       <Button
         onClick={() => navigate(-1)}
         sx={{
@@ -90,6 +96,7 @@ const AddPage = () => {
         ← Retour
       </Button>
 
+      {/*en-tête de la page avec le titre*/}
       <Box sx={{ textAlign: "center", mb: 2 }}>
         <Typography
           variant="h4"
@@ -103,7 +110,7 @@ const AddPage = () => {
         </Typography>
       </Box>
 
-      {/* café ajouté + message de confirmation */}
+      {/* si café ajouté, apparition d'un message de confirmation */}
       {cafeAjoute ? (
         <Box
           sx={{
@@ -136,6 +143,7 @@ const AddPage = () => {
               flexWrap: "wrap",
             }}
           >
+            {/*bouton pour naviguer vers la liste des cafés*/}
             <Button
               variant="contained"
               color="primary"
@@ -143,6 +151,7 @@ const AddPage = () => {
             >
               Voir ma liste
             </Button>
+            {/*bouton pour réinitialiser le formulaire et ajouter un autre café*/}
             <Button
               variant="outlined"
               color="secondary"
@@ -165,10 +174,10 @@ const AddPage = () => {
           </Box>
         </Box>
       ) : (
-        /* form d'ajout */
+        /* formulaire d'ajout */
         <Box
           component="form"
-          onSubmit={handleSubmit}
+          onSubmit={handleSubmit} //appel à la fonction
           sx={{
             bgcolor: "#f8f8ec",
             border: "1px solid #d8dbae",
@@ -247,6 +256,7 @@ const AddPage = () => {
             fullWidth
           />
 
+          {/*case à cocher pour dire si le café doit etre ajouté aux favoris directement*/}
           <FormControlLabel
             control={
               <Checkbox
@@ -259,12 +269,14 @@ const AddPage = () => {
             label="Ajouter aux favoris"
           />
 
+          {/*message d'erreur si nécessaire*/}
           {error && (
             <Typography color="error" textAlign="center">
               {error}
             </Typography>
           )}
 
+          {/*bouton de soumission du form, il est désactivé pendant le chargement*/}
           <Button
             type="submit"
             variant="contained"

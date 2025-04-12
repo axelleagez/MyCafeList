@@ -1,3 +1,6 @@
+//le document définit la page qui affiche la liste des cafés favoris
+//elle permet également d'accéder aux détails des cafés et de modifier le statut favori
+
 import {
   Container,
   Typography,
@@ -14,6 +17,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import { useFavorites } from "../contexts/FavoritesContext";
 import { useNavigate } from "react-router-dom";
 
+//composants de la page
 const FavoritesPage = () => {
   const { cafes, toggleFavorite, isLoading } = useFavorites();
   const navigate = useNavigate();
@@ -23,6 +27,7 @@ const FavoritesPage = () => {
 
   return (
     <Container maxWidth="sm" sx={{ minHeight: "100vh", pb: 10, pt: 4 }}>
+      {/* titre de la page */}
       <Typography
         variant="h4"
         sx={{
@@ -36,6 +41,7 @@ const FavoritesPage = () => {
       </Typography>
 
       {favorites.length ? (
+        // si au moins un café favori est présent, on affiche la liste
         <List sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
           {favorites.map((cafe) => (
             <Paper
@@ -47,6 +53,7 @@ const FavoritesPage = () => {
                 backgroundColor: "#f8f8ec",
               }}
             >
+              {/* bouton liste qui redirige vers les détails du café quand on clique dessus */}
               <ListItemButton
                 sx={{
                   display: "flex",
@@ -57,6 +64,7 @@ const FavoritesPage = () => {
               >
                 <ListItemText
                   primary={
+                    // Affichage du nom du café
                     <Typography
                       variant="h6"
                       sx={{ fontWeight: 600, color: "#333" }}
@@ -65,10 +73,15 @@ const FavoritesPage = () => {
                     </Typography>
                   }
                   secondary={
-                    <Typography>
+                    // Affichage des informations secondaires
+                    <Typography
+                      component="span"
+                      variant="body2"
+                      color="textSecondary"
+                    >
                       {`${cafe.adress || "Adresse inconnue"}, ${
                         cafe.city || "Ville inconnue"
-                      }`}
+                      }, ${cafe.country || "Pays inconnu"}`}
                       {cafe.note && (
                         <Box sx={{ mt: 0.5 }}>
                           <Rating
@@ -82,6 +95,7 @@ const FavoritesPage = () => {
                     </Typography>
                   }
                 />
+                {/* bouton favori qui permet de basculer le statut */}
                 <IconButton
                   onClick={(e) => {
                     e.stopPropagation();
@@ -96,6 +110,7 @@ const FavoritesPage = () => {
           ))}
         </List>
       ) : (
+        // affichage d'un message si aucun café n'est favori
         <Typography textAlign="center" sx={{ mt: 4 }}>
           Aucun café en favori.
         </Typography>

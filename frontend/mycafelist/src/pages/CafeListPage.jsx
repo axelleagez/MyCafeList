@@ -1,3 +1,6 @@
+//ce document définit une page qui affiche la liste des cafés enregistrés par l'user
+//elle permet de consulter les détails des cafés, d'ajouter un nv café et de mettre ses cafés en favori
+
 import React, { useEffect } from "react";
 import {
   Container,
@@ -17,18 +20,21 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import { useNavigate } from "react-router-dom";
 import { useFavorites } from "../contexts/FavoritesContext";
 
+//composants de la page
 const CafeListPage = () => {
   const { cafes, toggleFavorite, isLoading, fetchCafes } = useFavorites();
   const navigate = useNavigate();
 
+  //useEffect pour charger les cafés via l'API
   useEffect(() => {
-    fetchCafes(); // chargement des cafés
+    fetchCafes(); 
   }, [fetchCafes]);
 
   if (isLoading) return <CircularProgress />;
 
   return (
     <Container maxWidth="sm" sx={{ minHeight: "100vh", pb: 10, pt: 4 }}>
+       {/* en-tête de la page avec le titre */}
       <Typography
         variant="h4"
         sx={{
@@ -41,6 +47,7 @@ const CafeListPage = () => {
         Ma Liste de Cafés
       </Typography>
 
+      {/* bouton pour naviguer vers la page d'ajout d'un nouveau café */}
       <Box sx={{ display: "flex", justifyContent: "center", mb: 3 }}>
         <Button
           variant="contained"
@@ -57,6 +64,7 @@ const CafeListPage = () => {
         </Button>
       </Box>
 
+      {/* si des cafés existent, affichage de la liste sinon un message d'information */}
       {cafes.length ? (
         <List sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
           {cafes.map((cafe) => (
@@ -69,6 +77,7 @@ const CafeListPage = () => {
                 backgroundColor: "#f8f8ec",
               }}
             >
+               {/* bouton liste qui dirige vers les détails du café */}
               <ListItemButton
                 sx={{
                   display: "flex",
@@ -77,6 +86,7 @@ const CafeListPage = () => {
                 }}
                 onClick={() => navigate(`/details/${cafe.id}`)}
               >
+                 {/* affichage des infos principales du café */}
                 <ListItemText
                   primary={
                     <Typography
@@ -96,6 +106,7 @@ const CafeListPage = () => {
                         cafe.city || "Ville inconnue"
                       }, ${cafe.country || "Pays inconnu"}`}
                       {cafe.note && (
+                        // composant Rating si le café possède une note 
                         <Box sx={{ mt: 0.5 }}>
                           <Rating
                             value={cafe.note}
@@ -108,6 +119,7 @@ const CafeListPage = () => {
                     </Typography>
                   }
                 />
+                {/* bouton pour basculer le statut favori du café */}
                 <IconButton
                   onClick={(e) => {
                     e.stopPropagation();
@@ -122,6 +134,7 @@ const CafeListPage = () => {
           ))}
         </List>
       ) : (
+        //message si aucun café n'est enregistré
         <Typography textAlign="center" sx={{ mt: 4 }}>
           Aucun café enregistré.
         </Typography>

@@ -1,7 +1,10 @@
+//ce document est un contrôleur API pour la classe des users
+
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MyCafeList.Models;
 
+//controller pour les users : get, get avec id, post pour register, post pour login, put avec id, delete avec id
 namespace MyCafeList.Controllers
 {
     [ApiController]
@@ -22,6 +25,20 @@ namespace MyCafeList.Controllers
             var users = await _context.Users.Select(u => new UserDTO(u)).ToListAsync();
 
             return Ok(users);
+        }
+
+        // GET: api/users/{id}
+        [HttpGet("{id}")]
+        public async Task<ActionResult<UserDTO>> GetUser(int id)
+        {
+            var user = await _context.Users.FindAsync(id);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return new UserDTO(user);
         }
 
         // POST: api/users/register
@@ -65,20 +82,6 @@ namespace MyCafeList.Controllers
                 Password = user.Password,
                 PrivateMode = user.PrivateMode,
             };
-        }
-
-        // GET: api/users/{id}
-        [HttpGet("{id}")]
-        public async Task<ActionResult<UserDTO>> GetUser(int id)
-        {
-            var user = await _context.Users.FindAsync(id);
-
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            return new UserDTO(user);
         }
 
         // PUT: api/users/{id}

@@ -1,3 +1,6 @@
+//ce document définit l'application principale
+//elle configure le thème, le routage et la structure générale de l'interface
+
 import React, { useContext } from "react";
 import { ThemeProvider } from "@mui/material/styles";
 import style from "./services/style";
@@ -16,6 +19,7 @@ import OthersCafeDetailsPage from "./pages/OthersCafeDetailsPage";
 import { Box } from "@mui/material";
 import ScrollToTop from "./components/ScrollToTop";
 
+//composant pour gérer les routes privées : on affiche l'élément si l'user est authentifié sinon on redirige vers page de connexion
 const PrivateRoute = ({ element }) => {
   const { isAuthenticated } = useContext(AuthContext);
   return isAuthenticated ? element : <Navigate to="/" />;
@@ -33,9 +37,12 @@ function App() {
           pb: 10, // marge pour la navbar
         }}
       >
+        {/* application du thème personnalisé avec ThemeProvider */}
         <ThemeProvider theme={style}>
-          <ScrollToTop/>
+          {/* composant pour forcer le scroll vers le haut */}
+          <ScrollToTop />
           {isAuthenticated && <Navbar />}
+          {/* definition des différentes routes de l'application */}
           <Routes>
             <Route
               path="/"

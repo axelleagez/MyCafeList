@@ -1,11 +1,16 @@
+//ce document définit la page d'accueil de l'app
+//elle permet d'afficher un message de bienvenue, d'ajouter un café ou de consulter sa liste de cafés
+
 import { Box, Button, Container, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
+//composant de la page
 const HomePage = () => {
   const navigate = useNavigate();
 
   return (
     <Container maxWidth="sm" sx={{ textAlign: "center", mt: 4 }}>
+      {/* boîte pour afficher le logo */}
       <Box sx={{ display: "flex", justifyContent: "center", mt: 2, mb: 4 }}>
         <img
           src="logo.png"
@@ -47,9 +52,10 @@ const HomePage = () => {
         </Typography>
       </Box>
 
+      {/* boîte contenant les deux boutons d'action */}
       <Box sx={{ mt: 4, display: "flex", flexDirection: "column", gap: 2 }}>
         {" "}
-        {/*deux boutons*/}
+        {/*bouton pour naviguer vers la page d'ajout d'un café*/}
         <Button
           variant="contained"
           size="large"
@@ -58,6 +64,7 @@ const HomePage = () => {
         >
           Ajouter un café à ma liste
         </Button>
+        {/* bouton pour naviguer vers la page listant les cafés à visiter */}
         <Button
           variant="outlined"
           size="large"

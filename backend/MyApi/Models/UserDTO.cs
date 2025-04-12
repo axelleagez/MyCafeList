@@ -1,3 +1,6 @@
+//ce dpcument définit la classe UserDTO
+//il permet de faciliter le transfert de données back/front sans exposer directement la classe de base
+
 namespace MyCafeList.Models;
 
 public class UserDTO
@@ -10,6 +13,7 @@ public class UserDTO
 
     public UserDTO() { }
 
+    //constructeur pour créer un DTO à partir d'un user
     public UserDTO(User user)
     {
         Id = user.Id;

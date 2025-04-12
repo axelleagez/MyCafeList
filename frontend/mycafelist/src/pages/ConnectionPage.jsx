@@ -1,8 +1,10 @@
+//ce document définit la page de connexion et d'inscription
+//elle permet à l'utilisateur de se connecter ou de créer un compte via un formulaire
+
 import React, { useState, useContext } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import axios from "../services/api";
-
 import {
   Container,
   TextField,
@@ -15,6 +17,7 @@ import {
   Paper,
 } from "@mui/material";
 
+//composants de la page
 const ConnectionPage = () => {
   const [tab, setTab] = useState(0); // 0 = Connexion, 1 = Inscription
   const { login } = useContext(AuthContext);
@@ -27,20 +30,24 @@ const ConnectionPage = () => {
   const [isLoginMode, setIsLoginMode] = useState(true);
   const [error, setError] = useState("");
 
+  //fonction pour mettre à jour le formulaire à chaque changement d'un champ
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  //fonction pour changer d'onglet et choisir entre connexion et inscription
   const handleTab = (value) => {
     setTab(value);
     setIsLoginMode(!isLoginMode);
   };
 
+  //fonction pour gérer l'envoi du formulaire
   const handleSubmit = async (event) => {
     event.preventDefault();
     setError("");
 
     try {
+      //plusieurs appels selon le mode connexion ou inscription
       const response = isLoginMode
         ? await axios.login(formData)
         : await axios.register(formData);
@@ -51,14 +58,13 @@ const ConnectionPage = () => {
         setError("Échec de l'authentification.");
       }
     } catch (err) {
-      setError(
-        err.response?.data || "Erreur lors de l'authentification."
-      );
+      setError(err.response?.data || "Erreur lors de l'authentification.");
     }
   };
 
   return (
     <Container maxWidth="sm" sx={{ minHeight: "100vh", pt: 4, pb: 10 }}>
+      {/* affichage du logo */}
       <Box sx={{ display: "flex", justifyContent: "center", mt: 2, mb: 4 }}>
         <img
           src="logo.png"
@@ -70,6 +76,7 @@ const ConnectionPage = () => {
         />
       </Box>
 
+      {/* titre dynamique en fonction de l'onglet actif */}
       <Typography
         variant="h4"
         sx={{
@@ -82,7 +89,7 @@ const ConnectionPage = () => {
         {tab === 0 ? "Connexion" : "Inscription"}
       </Typography>
 
-      {/* onglets pour basculer entre Connexion et Inscription */}
+      {/* onglets pour basculer entre connexion et inscription */}
       <Tabs
         value={tab}
         onChange={(event, newValue) => handleTab(newValue)}
@@ -101,13 +108,14 @@ const ConnectionPage = () => {
         <Tab label="S'inscrire" />
       </Tabs>
 
+      {/* affichage d'un message d'erreur si besoin */}
       {error && (
         <Alert severity="error" sx={{ mb: 2 }}>
           {error}
         </Alert>
       )}
 
-      {/* formulaire */}
+      {/* formulaire de connexion / inscription */}
       <Paper
         elevation={1}
         sx={{
@@ -122,6 +130,7 @@ const ConnectionPage = () => {
           onSubmit={handleSubmit}
           sx={{ display: "flex", flexDirection: "column", gap: 2 }}
         >
+          {/* champ "nom" affiché uniquement en mode inscription */}
           {tab === 1 && (
             <TextField
               label="Nom"
@@ -151,6 +160,7 @@ const ConnectionPage = () => {
             fullWidth
           />
 
+          {/* bouton de soumission avec un libellé différent selon le mode */}
           <Button type="submit" variant="contained" color="primary" fullWidth>
             {tab === 0 ? "Se connecter" : "Créer un compte"}
           </Button>

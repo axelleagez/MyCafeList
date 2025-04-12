@@ -1,7 +1,8 @@
+//création du builder de l'app web et ajout du support des contrôleurs API
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 
-//accepter les requetes du front
+//configuration CORS pour accepter les requetes du front
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(
@@ -13,17 +14,21 @@ builder.Services.AddCors(options =>
     );
 });
 
+//génération du swagger et ajout du DataContext
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<DataContext>();
 
+//création de l'application
 var app = builder.Build();
 
-//pour activer le CORS
+//activation du CORS
 app.UseCors("AllowAll");
 
+//initialisation de la bdd
 //SeedData.Init();
 
+//activation du swagger si on est en environnement de développement
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

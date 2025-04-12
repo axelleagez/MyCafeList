@@ -1,3 +1,6 @@
+//ce document définit la page de partage
+//elle permet à l'utilisateur de rechercher par email un autre utilisateur et de voir les favoris de ce dernier
+
 import React, { useState, useEffect } from "react";
 import {
   Box,
@@ -13,6 +16,7 @@ import {
 import axios from "../services/api";
 import { useNavigate } from "react-router-dom";
 
+//composants de la page
 const SharePage = () => {
   const [searchInput, setSearchInput] = useState("");
   const [userOptions, setUserOptions] = useState([]);
@@ -23,7 +27,7 @@ const SharePage = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
-  // chargement des utilisateurs
+  // useEffect pour charger la liste de tous les utilisateurs
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -36,7 +40,7 @@ const SharePage = () => {
     fetchUsers();
   }, []);
 
-  // filtrage des utilisateurs selon input
+  // useEffect pour filtrer les utilisateurs en fonction de la saisie de recherche
   useEffect(() => {
     if (searchInput === "") {
       setFilteredUsers([]); // entrée vide = on n'affiche rien
@@ -48,11 +52,12 @@ const SharePage = () => {
     }
   }, [searchInput, userOptions]);
 
-  // sélectionner user
+  // Fonction pour sélectionner un utilisateur depuis la liste filtrée
   const handleUserSelect = async (user) => {
     setSelectedUser(user);
     setErrorMessage("");
 
+    // si le compte de l'utilisateur est privé, ne pas afficher ses favoris
     if (user.privateMode) {
       setUserFavorites([]);
       setErrorMessage(
@@ -61,7 +66,7 @@ const SharePage = () => {
       return;
     }
 
-    // récupérer ses cafés favoris
+    // sinon, récupérer la liste des cafés favoris
     try {
       setIsLoading(true);
       const favorites = await axios.getUserFavorites(user.id);
@@ -76,6 +81,7 @@ const SharePage = () => {
 
   return (
     <Box sx={{ p: 3, minHeight: "100vh", backgroundColor: "#ffffff" }}>
+      {/* titre de la page */}
       <Typography
         variant="h4"
         sx={{
@@ -88,13 +94,13 @@ const SharePage = () => {
         Les favoris des autres
       </Typography>
 
-      {/* Champ de texte pour rechercher un utilisateur par email */}
+      {/* barre de recherche pour rechercher un utilisateur par email */}
       <TextField
         label="Rechercher un utilisateur par email"
         variant="outlined"
         fullWidth
         value={searchInput}
-        onChange={(e) => setSearchInput(e.target.value)} // mise à jour saisie
+        onChange={(e) => setSearchInput(e.target.value)}
         onKeyDown={(e) => {
           if (e.key === "Enter" && filteredUsers.length > 0) {
             handleUserSelect(filteredUsers[0]); // entrée = sélectionner le premier utilisateur
@@ -107,7 +113,7 @@ const SharePage = () => {
         }}
       />
 
-      {/* affichage des users */}
+      {/* affichage des users filtrés lorsque l'input n'est pas vide */}
       {searchInput && filteredUsers.length > 0 && (
         <List sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
           {filteredUsers.map((user) => (
@@ -117,10 +123,11 @@ const SharePage = () => {
               sx={{
                 p: 1,
                 borderRadius: 2,
-                backgroundColor: "#e8f4e1", // Fond vert clair pour effet de suggestion
-                border: "1px solid primary", // Bordure verte pour marquer l'élément
+                backgroundColor: "#e8f4e1", // vert clair
+                border: "1px solid primary",
               }}
             >
+              {/* bouton de la liste pour sélectionner un utilisateur */}
               <ListItemButton
                 sx={{
                   display: "flex",
@@ -139,14 +146,14 @@ const SharePage = () => {
         </List>
       )}
 
-      {/* si l'user n'existe pas */}
+      {/* message d'erreur si il y a un problème */}
       {errorMessage && (
         <Typography color="error" sx={{ textAlign: "center", mt: 2 }}>
           {errorMessage}
         </Typography>
       )}
 
-      {/* affichage favoris de l'user */}
+      {/* affichage de la liste des favoris de l'user */}
       {isLoading ? (
         <CircularProgress />
       ) : (
@@ -161,6 +168,7 @@ const SharePage = () => {
                 backgroundColor: "#f8f8ec",
               }}
             >
+              {/* bouton de liste qui redirige vers la page de détails du café */}
               <ListItemButton
                 sx={{
                   display: "flex",
@@ -187,6 +195,7 @@ const SharePage = () => {
                       {`${cafe.adress}, ${cafe.city}, ${cafe.country}`}
 
                       {cafe.note && (
+                        //Affichage de la note du café sous forme d'étoiles
                         <Box sx={{ mt: 0.5 }}>
                           <Rating
                             value={cafe.note}
