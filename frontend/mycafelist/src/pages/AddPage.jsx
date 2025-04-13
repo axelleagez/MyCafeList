@@ -19,6 +19,7 @@ import axios from "../services/api";
 const AddPage = () => {
   const navigate = useNavigate(); 
   const location = useLocation();
+  
   //déclaration de l'état initial du formulaire avec pré remplissage
   const [formData, setFormData] = useState({
     idUser: "",

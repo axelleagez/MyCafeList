@@ -126,7 +126,7 @@ const CafeDetailsPage = () => {
             <TextField
               fullWidth
               label="Nom"
-              name="nom"
+              name="name"
               value={cafe.name}
               onChange={handleChange}
             />
@@ -151,27 +151,27 @@ const CafeDetailsPage = () => {
         {/* liste des détails du café */}
         <List>
           {[
-            "adresse",
-            "ville",
-            "pays",
-            "description",
-            "note",
-            "commentaire",
+            { key: "adress", label: "Adresse" },
+            { key: "city", label: "Ville" },
+            { key: "country", label: "Pays" },
+            { key: "description", label: "Description" },
+            { key: "note", label: "Note" },
+            { key: "comment", label: "Commentaire" },
           ].map((field) => (
-            <ListItem key={field}>
+            <ListItem key={field.key}>
               {editable ? ( // si mode édition, afficher un champ de texte pour modifier le champ correspondant
                 <TextField
                   fullWidth
-                  label={field.charAt(0).toUpperCase() + field.slice(1)}
-                  name={field}
+                  label={field.label}
+                  name={field.key}
                   value={cafe[field] || ""}
                   onChange={handleChange}
-                  multiline={["description", "comment"].includes(field)}
+                  multiline={["description", "comment"].includes(field.key)}
                 />
               ) : (
                 <ListItemText
-                  primary={field.charAt(0).toUpperCase() + field.slice(1)}
-                  secondary={cafe[field] || "Non renseigné"}
+                  primary={field.label}
+                  secondary={cafe[field.key] || "Non renseigné"}
                 />
               )}
             </ListItem>

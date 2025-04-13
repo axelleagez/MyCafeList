@@ -113,17 +113,17 @@ const OthersCafeDetailsPage = () => {
         {/* liste des infos détaillées du café */}
         <List>
           {[
-            "adresse",
-            "ville",
-            "pays",
-            "description",
-            "note",
-            "commentaire",
+            { key: "adress", label: "Adresse" },
+            { key: "city", label: "Ville" },
+            { key: "country", label: "Pays" },
+            { key: "description", label: "Description" },
+            { key: "note", label: "Note" },
+            { key: "comment", label: "Commentaire" },
           ].map((field) => (
-            <ListItem key={field}>
+            <ListItem key={field.key}>
               <ListItemText
-                primary={field.charAt(0).toUpperCase() + field.slice(1)}
-                secondary={cafe[field] || "Non renseigné"}
+                primary={field.label}
+                secondary={cafe[field.key] || "Non renseigné"}
               />
             </ListItem>
           ))}
