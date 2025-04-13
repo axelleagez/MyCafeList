@@ -164,7 +164,7 @@ const CafeDetailsPage = () => {
                   fullWidth
                   label={field.label}
                   name={field.key}
-                  value={cafe[field] || ""}
+                  value={cafe[field.key] || ""}
                   onChange={handleChange}
                   multiline={["description", "comment"].includes(field.key)}
                 />
