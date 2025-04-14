@@ -223,7 +223,7 @@ const AddPage = () => {
             fullWidth
           />
           <TextField
-            label="Description"
+            label="Description du café"
             name="description"
             value={formData.description}
             onChange={handleChange}
@@ -234,7 +234,7 @@ const AddPage = () => {
 
           <TextField
             select
-            label="Note"
+            label="Ma note"
             name="note"
             value={formData.note}
             onChange={handleChange}
@@ -248,7 +248,7 @@ const AddPage = () => {
           </TextField>
 
           <TextField
-            label="Commentaire"
+            label="Mon commentaire"
             name="comment"
             value={formData.comment}
             onChange={handleChange}

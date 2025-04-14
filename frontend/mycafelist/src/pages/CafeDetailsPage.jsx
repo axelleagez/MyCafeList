@@ -154,9 +154,9 @@ const CafeDetailsPage = () => {
             { key: "adress", label: "Adresse" },
             { key: "city", label: "Ville" },
             { key: "country", label: "Pays" },
-            { key: "description", label: "Description" },
-            { key: "note", label: "Note" },
-            { key: "comment", label: "Commentaire" },
+            { key: "description", label: "Description du café" },
+            { key: "note", label: "Ma note" },
+            { key: "comment", label: "Mon commentaire" },
           ].map((field) => (
             <ListItem key={field.key}>
               {editable ? ( // si mode édition, afficher un champ de texte pour modifier le champ correspondant
