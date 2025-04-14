@@ -1,17 +1,17 @@
 # MyCafeList
 
-# Notice d'installation 
+## Notice d'installation 
 
-# Étape 1 : Transférer le projet sur votre ordinateur 
+### Étape 1 : Transférer le projet sur votre ordinateur 
 
 Téléchargez le projet dans l’emplacement de votre choix sur votre ordinateur.
 
-# Étape 2 : Ouvrir le projet dans VS Code 
+### Étape 2 : Ouvrir le projet dans VS Code 
 
 Installez VS Code si ce n’est pas déjà fait : Download Visual Studio Code - Mac, Linux, Windows
 Dans VS Code, ouvrez le projet.
 
-# Étape 3 : Lancer le back-end du projet 
+### Étape 3 : Lancer le back-end du projet 
 
 Ouvrez un nouveau terminal : cliquez sur Terminal → New Terminal.
 Placez-vous à la racine du projet grâce à la commande cd pour aller jusqu’à MyCafeList
@@ -20,7 +20,7 @@ Placez vous dans le terminal et faites la commande suivante : dotnet run
 
 Vous pouvez désormais visualiser le backend du projet MyCafeList.
 
-# Étape 4 : Lancer le front-end du projet 
+### Étape 4 : Lancer le front-end du projet 
 
 Ouvrez un nouveau terminal : cliquez sur Terminal → New Terminal.
 Placez-vous à la racine du projet grâce à la commande cd pour aller jusqu’à MyCafeList
